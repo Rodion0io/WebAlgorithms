@@ -1,0 +1,42 @@
+body {
+  background-color: #F9F9F9;
+  font-family: sans-serif;
+}
+
+.container {
+  max-width: 1356px;
+  margin: auto;
+}
+
+.hero {
+  margin-top: 40px;
+}
+.hero-navbar {
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #EDEDEE;
+  border-radius: 8px;
+}
+
+.links {
+  width: 90%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.logo {
+  margin-left: 25px;
+}
+
+.link {
+  text-decoration: none;
+  color: #000000;
+  transition: all 0.2s;
+}
+
+.link:hover {
+  color: #FF0000;
+}/*# sourceMappingURL=style.css.map */
