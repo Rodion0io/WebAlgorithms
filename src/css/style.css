@@ -58,17 +58,18 @@ body {
 
 .settings {
   display: inline-block;
+  padding-top: 70px;
 }
 
-.setting-label {
+.settings-label {
   display: block;
   margin-bottom: 10px;
 }
 
 .field {
   border: 1px solid;
-  width: 500px;
-  height: 500px;
+  width: 550px;
+  height: 550px;
 }
 
 .input {
