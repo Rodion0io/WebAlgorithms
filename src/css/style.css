@@ -46,9 +46,14 @@ body {
   color: #FF0000;
 }
 
+.interface-block {
+  display: flex;
+  justify-content: space-around;
+}
+
 .name-page {
   margin-top: 35px;
-  margin-bottom: 50px;
+  margin-bottom: 70px;
 }
 
 .settings {
@@ -61,10 +66,9 @@ body {
 }
 
 .field {
-  display: inline-block;
   border: 1px solid;
-  width: 100px;
-  height: 100px;
+  width: 500px;
+  height: 500px;
 }
 
 .input {
