@@ -8,6 +8,11 @@ body {
   margin: auto;
 }
 
+.title {
+  font-size: 28px;
+  font-weight: 100;
+}
+
 .hero {
   margin-top: 40px;
 }
