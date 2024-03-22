@@ -14,7 +14,7 @@ body {
 }
 
 .hero {
-  margin-top: 40px;
+  margin-top: 20px;
 }
 .hero-navbar {
   height: 50px;
@@ -64,6 +64,8 @@ body {
 .settings-label {
   display: block;
   margin-bottom: 10px;
+  font-size: 25px;
+  font-weight: 400;
 }
 
 .field {
@@ -75,4 +77,9 @@ body {
 .input {
   margin-bottom: 30px;
   text-align: center;
+}
+
+.settings-input {
+  width: 180px;
+  height: 25px;
 }/*# sourceMappingURL=style.css.map */
