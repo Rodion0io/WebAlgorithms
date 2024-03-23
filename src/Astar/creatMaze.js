@@ -1,7 +1,9 @@
 const height = 5;
 const width = 5;
+const heightField = 550;
+const widthField = 550;
 
-function createMaze(height, width) {
+function createMaze(height, width){
     var matrix = [];
     for (let i = 0; i < height; i++){
         matrix[i] = [];
@@ -9,9 +11,10 @@ function createMaze(height, width) {
             matrix[i][j] = 0;
         }
     }
+
     var x = Math.floor(Math.random() * (width / 2)) * 2 + 1;
     var y = Math.floor(Math.random() * (height / 2)) * 2 + 1;
-    matrix[x][y] = 1;
+    matrix[x][y] =  1;
 
     var array = [];
     if (y - 2 >= 0){
@@ -28,12 +31,13 @@ function createMaze(height, width) {
     }
 
     while (array.length > 0){
-        var index = Math.floor(Math.random() * (array.length));
+        var index = Math.floor(Math.random() * array.length);
         var cell = array[index];
         x = cell.x;
         y = cell.y;
         matrix[x][y] = 1;
-        array.splice(index,1);
+        array.splice(index, 1);
+
     }
 
     var directions = ['north', 'south', 'east', 'west'];
@@ -81,14 +85,30 @@ function createMaze(height, width) {
     if (x + 2 < width && matrix[x + 2][y] == 0){
         to_check.push({ x: x + 2, y: y });
     }   
-    return matrix;
 }
 
 var matrix = createMaze(height, width);
 
-for (i = 0; i < height; i++){
-    console.log(matrix[i])
-    for (j = 0; j < width; j++){
-        console.log(matrix[i][j]);
+function visualizationMatrix(matrix, height, width){
+    const matrixContainer = document.getElementById('matrixContaienr');
+
+    for (let i = 0; i < height; i++){
+        const rowElement = document.createElement('div');
+        rowElement.classList.add('row');
+        for (let j = 0; j < widt; j++) {
+            // Create a cell element
+            const cellElement = document.createElement('div');
+            cellElement.classList.add('cell');
+            if (matrix[i][j] === 1) {
+                cellElement.style.backgroundColor = 'red';
+            } else {
+                cellElement.style.backgroundColor = 'green';
+            }
+
+            // Append the cell to the row
+            rowElement.appendChild(cellElement);
+        }
+        matrixContainer.appendChild(rowElement);
     }
 }
+visualizationMatrix(matrix);
