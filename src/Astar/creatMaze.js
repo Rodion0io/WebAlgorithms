@@ -1,94 +1,103 @@
-const height = 5;
-const width = 5;
+const height = 55;
+const width = 55;
 const heightField = 550;
 const widthField = 550;
 
-function createMaze(height, width){
-    var matrix = [];
-    for (let i = 0; i < height; i++){
-        matrix[i] = [];
-        for (let j = 0; j < width; j++){
-            matrix[i][j] = 0;
-        }
+function createMaze(width, height) {
+    // Создаем пустой двумерный массив для карты лабиринта
+    let map = [];
+  
+    // Заполняем карту стенами
+    for (let h = 0; h < height; h++) {
+      let row = [];
+      for (let w = 0; w < width; w++) {
+        row.push(1); // Стена
+      }
+      map.push(row);
     }
-
-    // Выберите случайную ячейку с нечетными x и y координатами и очистите ее.
-    var x = Math.floor(Math.random() * (width / 2)) * 2;
-    var y = Math.floor(Math.random() * (height / 2)) * 2;
-    matrix[x][y] = 1;
-
-    // Создайте массив и добавьте в него допустимые ячейки, находящиеся на два ортогональных пространства от ячейки, которую вы только что очистили.
-    var array = [];
+  
+    // Выбираем случайную ячейку с нечетными координатами и очищаем ее
+    let x = Math.floor(Math.random() * (width / 2)) * 2;
+    let y = Math.floor(Math.random() * (height / 2)) * 2;
+    map[y][x] = 0; // Пустая ячейка
+  
+    // Создаем массив и добавляем соседние ячейки, которые находятся на расстоянии двух клеток от выбранной
+    let toCheck = [];
     if (y - 2 >= 0) {
-        array.push({ x: x, y: y - 2});
+      toCheck.push({ x: x, y: y - 2 });
     }
     if (y + 2 < height) {
-        array.push({ x: x, y: y + 2});
+      toCheck.push({ x: x, y: y + 2 });
     }
     if (x - 2 >= 0) {
-        array.push({ x: x - 2, y: y });
+      toCheck.push({ x: x - 2, y: y });
     }
     if (x + 2 < width) {
-        array.push({ x: x + 2, y: y });
+      toCheck.push({ x: x + 2, y: y });
     }
-
-    while (array.length > 0){
-        var index = Math.floor(Math.random() * array.length);
-        var cell = array[index];
-        x = cell.x;
-        y = cell.y;
-        matrix[x][y] = 1;
-        array.splice(index, 1);
-
-    }
-
-    var directions = ['north', 'south', 'east', 'west'];
-    while (directions.length > 0){
-        var directionsIndex = Math.floor(Math.random() * (directions.length));
-        switch (directions[directionsIndex]){
-            case 'north':
-                if (y - 2 >= 0 && matrix[x][y - 2] == 0){
-                    matrix[x][y - 1] = 1;
-                    directions = [];
-                }
-                break;
-            case 'south':
-                if (y + 2 < height && matrix[x][y + 2] == 0){
-                    matrix[x][y + 1] = 1;
-                    directions = [];
-                }
-                break;
-            case 'east':
-                if (x + 2 < width && matrix[x + 2][y] == 0){
-                    matrix[x + 1][y] = 1;
-                    directions = [];
-                }
-                break;
-            case 'west':
-                if (x - 2 >= 0 && matrix[x - 2][y] == 0){
-                    matrix[x - 1][y] = 1;
-                    directions = [];
-                }
-                break;
+  
+    while (toCheck.length > 0) {
+      let randomIndex = Math.floor(Math.random() * toCheck.length);
+      let currentCell = toCheck[randomIndex];
+      x = currentCell.x;
+      y = currentCell.y;
+      map[y][x] = 0; // Очищаем текущую ячейку
+  
+      // Соединяем очищенную ячейку с другой пустой ячейкой
+      let directions = ["N", "S", "E", "W"];
+      while (directions.length > 0) {
+        let dirIndex = Math.floor(Math.random() * directions.length);
+        switch (directions[dirIndex]) {
+          case "N":
+            if (y - 2 >= 0 && map[y - 2][x] === 0) {
+              map[y - 1][x] = 0;
+              directions = [];
+            }
+            break;
+          case "S":
+            if (y + 2 < height && map[y + 2][x] === 0) {
+              map[y + 1][x] = 0;
+              directions = [];
+            }
+            break;
+          case "E":
+            if (x - 2 >= 0 && map[y][x - 2] === 0) {
+              map[y][x - 1] = 0;
+              directions = [];
+            }
+            break;
+          case "W":
+            if (x + 2 < width && map[y][x + 2] === 0) {
+              map[y][x + 1] = 0;
+              directions = [];
+            }
+            break;
         }
-        directions.splice(directionsIndex,1);
+        directions.splice(dirIndex, 1);
+      }
+  
+      // Добавляем соседние ячейки, которые являются стенами
+      if (y - 2 >= 0 && map[y - 2][x] === 1) {
+        toCheck.push({ x: x, y: y - 2 });
+      }
+      if (y + 2 < height && map[y + 2][x] === 1) {
+        toCheck.push({ x: x, y: y + 2 });
+      }
+      if (x - 2 >= 0 && map[y][x - 2] === 1) {
+        toCheck.push({ x: x - 2, y: y });
+      }
+      if (x + 2 < width && map[y][x + 2] === 1) {
+        toCheck.push({ x: x + 2, y: y });
+      }
+  
+      // Удаляем текущую ячейку из массива toCheck
+      toCheck.splice(randomIndex, 1);
     }
-
-    var to_check = [];
-    if (y - 2 >= 0 && matrix[x][y - 2] == 0){
-        to_check.push({ x: x, y: y - 2 });
-    }
-    if (y + 2 < height && matrix[x][y + 2] == 0){
-        to_check.push({ x: x, y: y + 2 });
-    }
-    if (x - 2 >= 0 && matrix[x - 2][y] == 0){
-        to_check.push({ x: x - 2, y: y });
-    }
-    if (x + 2 < width && matrix[x + 2][y] == 0){
-        to_check.push({ x: x + 2, y: y });
-    }   
-    return matrix;
+  
+    return map;
 }
+  
+  // Пример использования функции
 
 // for (let row of createMaze(height, width)){
 //     console.log(row.join("\t"));
@@ -105,6 +114,7 @@ function visualizationMaze(matrix, height, width, heightField, widthField) {
     for (let i = 0; i < height; i++) {
         const element = document.createElement('div');
         element.classList.add('block');
+        element.style.display = 'flex';
         field.appendChild(element);
         for (let j = 0; j < width; j++) {
             const childElement = document.createElement('div');
