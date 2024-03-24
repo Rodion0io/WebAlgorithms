@@ -1,7 +1,17 @@
-const height = 55;
-const width = 55;
 const heightField = 550;
 const widthField = 550;
+document.getElementById('generateButton').addEventListener('click', function() {
+    const height = width = document.getElementById('inputSize').value;
+    const field = document.querySelector('.field');
+    field.innerHTML = '';
+    visualizationMaze(height, width, heightField, widthField);
+});
+
+
+// const height = 50;
+// const width = 50;
+
+
 
 function createMaze(width, height) {
     // Создаем пустой двумерный массив для карты лабиринта
@@ -104,12 +114,11 @@ function createMaze(width, height) {
 // }
 
 
-var matrix = createMaze(height, width);
-
-function visualizationMaze(matrix, height, width, heightField, widthField) {
+function visualizationMaze(height, width, heightField, widthField) {
     const heightItem = heightField / height;
     const widthItem = widthField / width;
     const field = document.querySelector('.field');
+    var matrix = createMaze(height, width);
 
     for (let i = 0; i < height; i++) {
         const element = document.createElement('div');
@@ -128,4 +137,4 @@ function visualizationMaze(matrix, height, width, heightField, widthField) {
     }
 }
 
-visualizationMaze(matrix, height, width, heightField, widthField);
+// visualizationMaze(height, width, heightField, widthField);
