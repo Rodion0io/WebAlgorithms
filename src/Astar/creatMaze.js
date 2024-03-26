@@ -7,31 +7,22 @@ document.getElementById('generateButton').addEventListener('click', function() {
     visualizationMaze(height, width, heightField, widthField);
 });
 
-
-// const height = 50;
-// const width = 50;
-
-
-
 function createMaze(width, height) {
-    // Создаем пустой двумерный массив для карты лабиринта
     let map = [];
-  
-    // Заполняем карту стенами
-    for (let h = 0; h < height; h++) {
+    for (let h = 0; h < height; h++){
       let row = [];
-      for (let w = 0; w < width; w++) {
-        row.push(1); // Стена
+      for (let w = 0; w < width; w++){
+        row.push(1); 
       }
       map.push(row);
     }
   
-    // Выбираем случайную ячейку с нечетными координатами и очищаем ее
+
     let x = Math.floor(Math.random() * (width / 2)) * 2;
     let y = Math.floor(Math.random() * (height / 2)) * 2;
-    map[y][x] = 0; // Пустая ячейка
+    map[y][x] = 0;
   
-    // Создаем массив и добавляем соседние ячейки, которые находятся на расстоянии двух клеток от выбранной
+
     let toCheck = [];
     if (y - 2 >= 0) {
       toCheck.push({ x: x, y: y - 2 });
@@ -51,9 +42,9 @@ function createMaze(width, height) {
       let currentCell = toCheck[randomIndex];
       x = currentCell.x;
       y = currentCell.y;
-      map[y][x] = 0; // Очищаем текущую ячейку
+      map[y][x] = 0; 
   
-      // Соединяем очищенную ячейку с другой пустой ячейкой
+
       let directions = ["N", "S", "E", "W"];
       while (directions.length > 0) {
         let dirIndex = Math.floor(Math.random() * directions.length);
@@ -86,7 +77,7 @@ function createMaze(width, height) {
         directions.splice(dirIndex, 1);
       }
   
-      // Добавляем соседние ячейки, которые являются стенами
+
       if (y - 2 >= 0 && map[y - 2][x] === 1) {
         toCheck.push({ x: x, y: y - 2 });
       }
@@ -100,41 +91,64 @@ function createMaze(width, height) {
         toCheck.push({ x: x + 2, y: y });
       }
   
-      // Удаляем текущую ячейку из массива toCheck
       toCheck.splice(randomIndex, 1);
     }
   
     return map;
 }
-  
-  // Пример использования функции
 
-// for (let row of createMaze(height, width)){
-//     console.log(row.join("\t"));
-// }
 
 
 function visualizationMaze(height, width, heightField, widthField) {
-    const heightItem = heightField / height;
-    const widthItem = widthField / width;
-    const field = document.querySelector('.field');
-    var matrix = createMaze(height, width);
+  const heightItem = heightField / height;
+  const widthItem = widthField / width;
+  const field = document.querySelector('.field');
+  var matrix = createMaze(height, width);
 
-    for (let i = 0; i < height; i++) {
-        const element = document.createElement('div');
-        element.classList.add('block');
-        element.style.display = 'flex';
-        field.appendChild(element);
-        for (let j = 0; j < width; j++) {
-            const childElement = document.createElement('div');
-            childElement.classList.add('block__item');
-            childElement.style.backgroundColor = matrix[i][j] == 1 ? 'red' : 'blue';
-            childElement.style.display = 'inline-block';
-            childElement.style.width = `${widthItem}px`;
-            childElement.style.height = `${heightItem}px`;
-            element.appendChild(childElement);
-        }
+  for (let i = 0; i < height; i++) {
+      const element = document.createElement('div');
+      element.classList.add('block');
+      element.style.display = 'flex';
+      field.appendChild(element);
+      for (let j = 0; j < width; j++) {
+          const childElement = document.createElement('div');
+          childElement.classList.add('block__item');
+          childElement.id = `${i}-${j}`;
+          childElement.style.backgroundColor = matrix[i][j] == 1 ? 'red' : 'blue';
+          childElement.style.display = 'inline-block';
+          childElement.style.width = `${widthItem}px`;
+          childElement.style.height = `${heightItem}px`;
+          element.appendChild(childElement);
+      }
+  }
+
+  function changeItemOfMatrix(height, width, firstCoordinate, secondCoordinate){
+    var matrix = createMaze(width, height);
+    if (matrix[firstCoordinate][secondCoordinate] === 1){
+      return 1;
     }
-}
+    else{
+      return 0;
+    }
+  }
+  
 
-// visualizationMaze(height, width, heightField, widthField);
+  const divBlocks = document.querySelectorAll('.block__item');
+
+  divBlocks.forEach(div => {
+      div.addEventListener('click', function(event) {
+          var matrix = createMaze(width, height);
+          const clickedBlockId = event.target.id.split('-');
+          if (changeItemOfMatrix(height, width, clickedBlockId[0], clickedBlockId[1])){
+            matrix[clickedBlockId[0]][clickedBlockId[1]] = 0;
+              event.target.style.backgroundColor = 'blue'; 
+              
+          }
+          else{
+            matrix[clickedBlockId[0]][clickedBlockId[1]] = 1;
+              event.target.style.backgroundColor = 'red'; 
+              
+          }
+      });
+  });
+}
