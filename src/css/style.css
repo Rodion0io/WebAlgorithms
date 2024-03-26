@@ -46,6 +46,10 @@ body {
   color: #FF0000;
 }
 
+.button {
+  padding: 7px 15px;
+}
+
 .interface-block {
   display: flex;
   justify-content: space-around;
@@ -82,4 +86,13 @@ body {
 .settings-input {
   width: 180px;
   height: 25px;
+}
+
+.block {
+  height: 50px;
+  border: 1px solid red;
+}
+
+.first-button {
+  margin-bottom: 15px;
 }/*# sourceMappingURL=style.css.map */
