@@ -105,50 +105,44 @@ function visualizationMaze(height, width, heightField, widthField) {
   const field = document.querySelector('.field');
   var matrix = createMaze(height, width);
 
+  const canvas = document.createElement('canvas');
+  canvas.width = widthField;
+  canvas.height = heightField;
+  field.appendChild(canvas);
+
+  const ctx = canvas.getContext('2d');
+
   for (let i = 0; i < height; i++) {
-      const element = document.createElement('div');
-      element.classList.add('block');
-      element.style.display = 'flex';
-      field.appendChild(element);
       for (let j = 0; j < width; j++) {
-          const childElement = document.createElement('div');
-          childElement.classList.add('block__item');
-          childElement.id = `${i}-${j}`;
-          childElement.style.backgroundColor = matrix[i][j] == 1 ? 'red' : 'blue';
-          childElement.style.display = 'inline-block';
-          childElement.style.width = `${widthItem}px`;
-          childElement.style.height = `${heightItem}px`;
-          element.appendChild(childElement);
+          ctx.fillStyle = matrix[i][j] == 1 ? 'red' : 'blue';
+          ctx.fillRect(j * widthItem, i * heightItem, widthItem, heightItem);
       }
   }
 
-  function changeItemOfMatrix(height, width, firstCoordinate, secondCoordinate){
-    var matrix = createMaze(width, height);
-    if (matrix[firstCoordinate][secondCoordinate] === 1){
-      return 1;
-    }
-    else{
-      return 0;
-    }
+  function changeItemOfMatrix(height, width, firstCoordinate, secondCoordinate) {
+      if (matrix[firstCoordinate][secondCoordinate] === 1) {
+          matrix[firstCoordinate][secondCoordinate] = 0;
+          return 0;
+      } else {
+          matrix[firstCoordinate][secondCoordinate] = 1;
+          return 1;
+      }
   }
-  
 
-  const divBlocks = document.querySelectorAll('.block__item');
+  canvas.addEventListener('click', function(event) {
+      const rect = canvas.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      
+      const clickedBlockX = Math.floor(x / widthItem);
+      const clickedBlockY = Math.floor(y / heightItem);
 
-  divBlocks.forEach(div => {
-      div.addEventListener('click', function(event) {
-          var matrix = createMaze(width, height);
-          const clickedBlockId = event.target.id.split('-');
-          if (changeItemOfMatrix(height, width, clickedBlockId[0], clickedBlockId[1])){
-            matrix[clickedBlockId[0]][clickedBlockId[1]] = 0;
-              event.target.style.backgroundColor = 'blue'; 
-              
-          }
-          else{
-            matrix[clickedBlockId[0]][clickedBlockId[1]] = 1;
-              event.target.style.backgroundColor = 'red'; 
-              
-          }
-      });
+      if (changeItemOfMatrix(height, width, clickedBlockY, clickedBlockX)) {
+          ctx.fillStyle = 'blue';
+      } else {
+          ctx.fillStyle = 'red';
+      }
+      
+      ctx.fillRect(clickedBlockX * widthItem, clickedBlockY * heightItem, widthItem, heightItem);
   });
 }
