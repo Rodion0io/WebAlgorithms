@@ -3,7 +3,7 @@ const ctx = canvas.getContext("2d")
 const points = []; // массив для хранения поставленных точек
 let size =500
 let colours = [ "Purple", "Red", "Yellow", "Lime", "Teal", "Navy","SaddleBrown" ] 
-
+///тест для канваса 
 
 function setCanvasSize( size)   // устанавливаю размер канвас и делаю обводку
 {
