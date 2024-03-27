@@ -1,10 +1,12 @@
 const heightField = 550;
 const widthField = 550;
+
 document.getElementById('generateButton').addEventListener('click', function() {
     const height = width = document.getElementById('inputSize').value;
+    var matrix = createMaze(width, height);
     const field = document.querySelector('.field');
     field.innerHTML = '';
-    visualizationMaze(height, width, heightField, widthField);
+    visualizationMaze(matrix, height, width, heightField, widthField);
 });
 
 function createMaze(width, height) {
@@ -97,52 +99,85 @@ function createMaze(width, height) {
     return map;
 }
 
-
-
-function visualizationMaze(height, width, heightField, widthField) {
+function visualizationMaze(matrix, height, width, heightField, widthField) {
   const heightItem = heightField / height;
   const widthItem = widthField / width;
   const field = document.querySelector('.field');
-  var matrix = createMaze(height, width);
-
-  const canvas = document.createElement('canvas');
-  canvas.width = widthField;
-  canvas.height = heightField;
-  field.appendChild(canvas);
-
-  const ctx = canvas.getContext('2d');
 
   for (let i = 0; i < height; i++) {
-      for (let j = 0; j < width; j++) {
-          ctx.fillStyle = matrix[i][j] == 1 ? 'red' : 'blue';
-          ctx.fillRect(j * widthItem, i * heightItem, widthItem, heightItem);
-      }
+    const element = document.createElement('div');
+    element.classList.add('block');
+    element.style.display = 'flex';
+    element.style.border = '1px solid black';
+    element.style.height = `${heightItem}px`;
+    element.style.width = `${widthField}px`;
+    field.appendChild(element);
+    for (let j = 0; j < width; j++) {
+      const childElement = document.createElement('div');
+      childElement.classList.add('block__item');
+      childElement.id = `${i}-${j}`;
+      childElement.style.backgroundColor = matrix[i][j] == 1 ? 'red' : 'blue';
+      childElement.style.width = `${widthItem}px`;
+      childElement.style.height = `${heightItem}px`;
+      element.appendChild(childElement);
+    }
   }
 
-  function changeItemOfMatrix(height, width, firstCoordinate, secondCoordinate) {
-      if (matrix[firstCoordinate][secondCoordinate] === 1) {
-          matrix[firstCoordinate][secondCoordinate] = 0;
-          return 0;
+  field.addEventListener('click', function(event) {
+    const clickedBlock = event.target;
+    if (clickedBlock.classList.contains('block__item')) {
+      const clickedBlockId = clickedBlock.id.split('-');
+      const row = parseInt(clickedBlockId[0]);
+      const col = parseInt(clickedBlockId[1]);
+      if (matrix[row][col] == 1) {
+        clickedBlock.style.backgroundColor = 'blue';
+        matrix[row][col] = 0;
       } else {
-          matrix[firstCoordinate][secondCoordinate] = 1;
-          return 1;
+        clickedBlock.style.backgroundColor = 'red';
+        matrix[row][col] = 1;
       }
-  }
-
-  canvas.addEventListener('click', function(event) {
-      const rect = canvas.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-      
-      const clickedBlockX = Math.floor(x / widthItem);
-      const clickedBlockY = Math.floor(y / heightItem);
-
-      if (changeItemOfMatrix(height, width, clickedBlockY, clickedBlockX)) {
-          ctx.fillStyle = 'blue';
-      } else {
-          ctx.fillStyle = 'red';
-      }
-      
-      ctx.fillRect(clickedBlockX * widthItem, clickedBlockY * heightItem, widthItem, heightItem);
+    }
   });
 }
+
+function chooseStartPoint(matrix){
+  let flag = 1
+  const field = document.querySelector('.field');
+  if (flag){
+    field.addEventListener('click', function(event){
+      event.stopPropagation();
+      const clickedBlock = event.target;
+      if (clickedBlock.classList == 'block__item'){
+        const clickedBlockId = clickedBlock.id.split('-');
+        const row = parseInt(clickedBlockId[0]);
+        const column = parseInt(clickedBlockId[1]);
+        clickedBlock.style.backgroundColor = 'yellow';
+        matrix[row][column] = 2;
+      }
+    })
+    flag = 0;
+  }
+}
+
+function chooseEndPoint(matrix,event){
+  let flag = 1
+  const field = document.querySelector('.field');
+  if (flag){
+    field.addEventListener('click', function(event){
+      event.stopPropagation();
+      const clickedBlock = event.target;
+      if (clickedBlock.classList == 'block__item'){
+        const clickedBlockId = clickedBlock.id.split('-');
+        const row = parseInt(clickedBlockId[0]);
+        const column = parseInt(clickedBlockId[1]);
+        clickedBlock.style.backgroundColor = 'green';
+        matrix[row][column] = 3;
+      }
+    })
+    flag = 0;
+  }
+}
+
+document.getElementById('addStart').addEventListener('click', chooseStartPoint);
+
+document.getElementById('addEnd').addEventListener('click', chooseEndPoint);
