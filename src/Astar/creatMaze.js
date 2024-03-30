@@ -1,6 +1,8 @@
 const heightField = 550;
 const widthField = 550;
-var matrix;
+let matrix;
+let flag = true;
+
 document.getElementById('generateButton').addEventListener('click', function() {
     const height = width = document.getElementById('inputSize').value;
     matrix = createMaze(width, height);
@@ -70,8 +72,6 @@ function createMaze(width, height) {
   return map;
 }
 
-
-
 function visualizationMaze(matrix, height, width, heightField, widthField) {
   const heightItem = heightField / height;
   const widthItem = widthField / width;
@@ -113,52 +113,78 @@ function visualizationMaze(matrix, height, width, heightField, widthField) {
   });
 }
 
-function chooseStartPoint(matrix){
-  let flag = 1
-  const field = document.querySelector('.field');
-  if (flag){
-    field.addEventListener('click', function(event){
-      event.stopPropagation();
-      const clickedBlock = event.target;
-      if (clickedBlock.classList == 'block__item'){
-        const clickedBlockId = clickedBlock.id.split('-');
-        const row = parseInt(clickedBlockId[0]);
-        const column = parseInt(clickedBlockId[1]);
-        clickedBlock.style.backgroundColor = 'yellow';
-        matrix[row][column] = 2;
-        // for (let row of matrix){
-        //   console.log(row.join("\t"));
-        // }
+function checkStartPoint(matrix, height, width){
+  let randomValue = Math.floor(Math.random() * 2) + 1;
+  for (let i = 0; i < height; i++){
+    for (let j = 0; j < width; j++){
+      if (matrix[i][j] == 2){
+        matrix[i][j] = randomValue;
+        block = document.getElementById(`${i}-${j}`);
+        block.style.backgroundColor = matrix[i][j] == 1 ? 'red' : 'blue';
       }
-    })
+    }
   }
-  flag = 0;
+}
+
+function checkEndPoint(matrix, height, width){
+  let randomValue = Math.floor(Math.random() * 2) + 1;
+  for (let i = 0; i < height; i++){
+    for (let j = 0; j < width; j++){
+      if (matrix[i][j] == 3){
+        matrix[i][j] = randomValue;
+        block = document.getElementById(`${i}-${j}`);
+        block.style.backgroundColor = matrix[i][j] == 1 ? 'red' : 'blue';
+      }
+    }
+  }
+}
+
+function chooseStartPoint(matrix){
+  const field = document.querySelector('.field');
+  const height = matrix.length;
+  const width = matrix[0].length;
+  checkStartPoint(matrix, height, width);
+  field.addEventListener('click', eventChoosePoint);
+  function eventChoosePoint(event){
+    const clickedBlock = event.target;
+    if (clickedBlock.classList.contains('block__item')){
+      const clickedBlockId = clickedBlock.id.split('-');
+      const row = parseInt(clickedBlockId[0]);
+      const column = parseInt(clickedBlockId[1]);
+      clickedBlock.style.backgroundColor = 'yellow';
+      matrix[row][column] = 2;
+      field.removeEventListener('click', eventChoosePoint);
+    }
+  }
+  // field.addEventListener('click', eventChoosePoint(matrix));
 }
 
 function chooseEndPoint(matrix){
-  let flag = 1
   const field = document.querySelector('.field');
-  if (flag){
-    field.addEventListener('click', function(event){
-      event.stopPropagation();
-      const clickedBlock = event.target;
-      if (clickedBlock.classList == 'block__item'){
-        const clickedBlockId = clickedBlock.id.split('-');
-        const row = parseInt(clickedBlockId[0]);
-        const column = parseInt(clickedBlockId[1]);
-        clickedBlock.style.backgroundColor = 'green';
-        matrix[row][column] = 3;
-        // for (let row of matrix){
-        //   console.log(row.join("\t"));
-        // }
-      }
-    })
+  const height = matrix.length;
+  const width = matrix[0].length;
+  checkEndPoint(matrix, height, width);
+  field.addEventListener('click', eventChoosePoint);
+  function eventChoosePoint(event){
+    const clickedBlock = event.target;
+    if (clickedBlock.classList.contains('block__item')){
+      const clickedBlockId = clickedBlock.id.split('-');
+      const row = parseInt(clickedBlockId[0]);
+      const column = parseInt(clickedBlockId[1]);
+      clickedBlock.style.backgroundColor = 'green';
+      matrix[row][column] = 3;
+      field.removeEventListener('click', eventChoosePoint);
+    }
   }
-  flag = 0;
-}
-
+  // field.addEventListener('click', eventChoosePoint(matrix));
+} 
 
 document.getElementById('addStart').addEventListener('click', function() {
-  chooseStartPoint(matrix)});
+
+  chooseStartPoint(matrix)
+});
+
 document.getElementById('addEnd').addEventListener('click', function() {
-  chooseEndPoint(matrix)});
+  chooseEndPoint(matrix)
+});
+
