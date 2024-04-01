@@ -151,9 +151,15 @@ function chooseStartPoint(matrix) {
             const clickedBlockId = clickedBlock.id.split('-');
             const row = parseInt(clickedBlockId[0]);
             const column = parseInt(clickedBlockId[1]);
-            clickedBlock.style.backgroundColor = 'yellow';
-            matrix[row][column] = 2;
-            field.removeEventListener('click', eventChoosePoint);
+            if (matrix[row][column] !== 1){
+                clickedBlock.style.backgroundColor = 'yellow';
+                matrix[row][column] = 2;
+                field.removeEventListener('click', eventChoosePoint);
+            }
+            else{
+                alert("Хуйня переделывай");
+                field.removeEventListener('click', eventChoosePoint);
+            }
         }
     }
 }
@@ -170,9 +176,15 @@ function chooseEndPoint(matrix) {
             const clickedBlockId = clickedBlock.id.split('-');
             const row = parseInt(clickedBlockId[0]);
             const column = parseInt(clickedBlockId[1]);
-            clickedBlock.style.backgroundColor = 'green';
-            matrix[row][column] = 3;
-            field.removeEventListener('click', eventChoosePoint);
+            if (matrix[row][column] !== 1){
+                clickedBlock.style.backgroundColor = 'green';
+                matrix[row][column] = 3;
+                field.removeEventListener('click', eventChoosePoint);
+            }
+            else{
+                alert("Хуйня переделывай");
+                field.removeEventListener('click', eventChoosePoint);
+            }
         }
     }
 }
@@ -239,8 +251,8 @@ function astar(start, end, adjacencyMatrix) {
   const closedSet = new Set();
   const exploredNodes = [];
 
-  const dx = [0, 1, 0, -1]; // Сдвиги по x для движения вверх, вправо, вниз, влево
-  const dy = [-1, 0, 1, 0]; // Сдвиги по y для движения вверх, вправо, вниз, влево
+  const dx = [0, 1, 0, -1]; 
+  const dy = [-1, 0, 1, 0]; 
 
   while (openList.length > 0) {
       const current = openList.shift();
@@ -258,7 +270,7 @@ function astar(start, end, adjacencyMatrix) {
 
       closedSet.add(current.toString());
 
-      for (let i = 0; i < 4; i++) { // Перебираем все возможные направления движения
+      for (let i = 0; i < 4; i++) { 
           const nx = current.x + dx[i];
           const ny = current.y + dy[i];
           if (nx >= 0 && nx < numRows && ny >= 0 && ny < numCols && adjacencyMatrix[nx][ny] !== 0) {
