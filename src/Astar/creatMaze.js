@@ -81,7 +81,7 @@ function visualizationMaze(matrix, height, width, heightField, widthField) {
         const element = document.createElement('div');
         element.classList.add('block');
         element.style.display = 'flex';
-        element.style.border = '1px solid black';
+        // element.style.border = '1px solid black';
         element.style.height = `${heightItem}px`;
         element.style.width = `${widthField}px`;
         field.appendChild(element);
@@ -90,6 +90,7 @@ function visualizationMaze(matrix, height, width, heightField, widthField) {
             childElement.classList.add('block__item');
             childElement.id = `${i}-${j}`;
             childElement.style.backgroundColor = matrix[i][j] == 1 ? 'red' : 'blue';
+            childElement.style.border = '1px solid black';
             childElement.style.width = `${widthItem}px`;
             childElement.style.height = `${heightItem}px`;
             element.appendChild(childElement);
@@ -322,6 +323,7 @@ function animateSearch(exploredNodes, end) {
     }, 50);
 }
 
+
 document.getElementById('startButton').addEventListener('click', function() {
     const start = findStart(matrix);
     const end = findEnd(matrix);
@@ -330,21 +332,28 @@ document.getElementById('startButton').addEventListener('click', function() {
         animateSearch(exploredNodes, end);
         animatePath(path);
     } else {
-        console.log('Путь не найден');
+        alert("Нихуя не найдено!!! Лох ебаный")
     }
 });
 
 function animatePath(path) {
     let index = 0;
-    const intervalId = setInterval(function() {
+    const animateStep = () => {
         if (index < path.length) {
             const [x, y] = path[index];
             const blockId = `${x}-${y}`;
             const block = document.getElementById(blockId);
             block.style.backgroundColor = 'white';
             index++;
-        } else {
-            clearInterval(intervalId);
+            setTimeout(animateStep, 100); 
         }
-    }, 100);
+    };
+    animateStep();
+
+    setTimeout(() => {
+        const [x, y] = path[path.length - 1]; 
+        const blockId = `${x}-${y}`;
+        const block = document.getElementById(blockId);
+        block.style.backgroundColor = 'orange'; 
+    }, path.length * 100); 
 }
