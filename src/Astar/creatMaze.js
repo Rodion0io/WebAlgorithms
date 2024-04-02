@@ -1,10 +1,10 @@
 const heightField = 550;
 const widthField = 550;
 let matrix;
-let flag = true;
 
 document.getElementById('generateButton').addEventListener('click', function() {
-    const height = width = document.getElementById('inputSize').value;
+    const height = parseInt(document.getElementById('inputSize').value);
+    const width = parseInt(document.getElementById('inputSize').value);
     matrix = createMaze(width, height);
     const field = document.querySelector('.field');
     field.innerHTML = '';
@@ -12,18 +12,18 @@ document.getElementById('generateButton').addEventListener('click', function() {
 });
 
 function createMaze(width, height) {
-    let map = [];
+    let maze = [];
     for (let h = 0; h < height; h++) {
         let row = [];
         for (let w = 0; w < width; w++) {
             row.push(1);
         }
-        map.push(row);
+        maze.push(row);
     }
 
     let x = Math.floor(Math.random() * (width / 2)) * 2;
     let y = Math.floor(Math.random() * (height / 2)) * 2;
-    map[y][x] = 0;
+    maze[y][x] = 0;
 
     let toCheck = [{ x: x, y: y }];
 
@@ -37,30 +37,30 @@ function createMaze(width, height) {
             let dirIndex = Math.floor(Math.random() * directions.length);
             switch (directions[dirIndex]) {
                 case "N":
-                    if (y - 2 >= 0 && map[y - 2][x] === 1) {
-                        map[y - 1][x] = 0;
-                        map[y - 2][x] = 0;
+                    if (y - 2 >= 0 && maze[y - 2][x] === 1) {
+                        maze[y - 1][x] = 0;
+                        maze[y - 2][x] = 0;
                         toCheck.push({ x: x, y: y - 2 });
                     }
                     break;
                 case "S":
-                    if (y + 2 < height && map[y + 2][x] === 1) {
-                        map[y + 1][x] = 0;
-                        map[y + 2][x] = 0;
+                    if (y + 2 < height && maze[y + 2][x] === 1) {
+                        maze[y + 1][x] = 0;
+                        maze[y + 2][x] = 0;
                         toCheck.push({ x: x, y: y + 2 });
                     }
                     break;
                 case "E":
-                    if (x - 2 >= 0 && map[y][x - 2] === 1) {
-                        map[y][x - 1] = 0;
-                        map[y][x - 2] = 0;
+                    if (x - 2 >= 0 && maze[y][x - 2] === 1) {
+                        maze[y][x - 1] = 0;
+                        maze[y][x - 2] = 0;
                         toCheck.push({ x: x - 2, y: y });
                     }
                     break;
                 case "W":
-                    if (x + 2 < width && map[y][x + 2] === 1) {
-                        map[y][x + 1] = 0;
-                        map[y][x + 2] = 0;
+                    if (x + 2 < width && maze[y][x + 2] === 1) {
+                        maze[y][x + 1] = 0;
+                        maze[y][x + 2] = 0;
                         toCheck.push({ x: x + 2, y: y });
                     }
                     break;
@@ -69,7 +69,7 @@ function createMaze(width, height) {
         }
     }
 
-    return map;
+    return maze;
 }
 
 function visualizationMaze(matrix, height, width, heightField, widthField) {
@@ -103,7 +103,7 @@ function visualizationMaze(matrix, height, width, heightField, widthField) {
             const clickedBlockId = clickedBlock.id.split('-');
             const row = parseInt(clickedBlockId[0]);
             const col = parseInt(clickedBlockId[1]);
-            if (matrix[row][col] == 1) {
+            if (matrix[row][col] === 1) {
                 clickedBlock.style.backgroundColor = 'blue';
                 matrix[row][col] = 0;
             } else {
@@ -152,9 +152,12 @@ function chooseStartPoint(matrix) {
             const clickedBlockId = clickedBlock.id.split('-');
             const row = parseInt(clickedBlockId[0]);
             const column = parseInt(clickedBlockId[1]);
-            if (matrix[row][column] !== 1){
+            if (matrix[row][column] !== 0){
                 clickedBlock.style.backgroundColor = 'yellow';
                 matrix[row][column] = 2;
+                for (let row of matrix){
+                    console.log(row.join('\t'));
+                }
                 field.removeEventListener('click', eventChoosePoint);
             }
             else{
@@ -177,7 +180,7 @@ function chooseEndPoint(matrix) {
             const clickedBlockId = clickedBlock.id.split('-');
             const row = parseInt(clickedBlockId[0]);
             const column = parseInt(clickedBlockId[1]);
-            if (matrix[row][column] !== 1){
+            if (matrix[row][column] !== 0){
                 clickedBlock.style.backgroundColor = 'green';
                 matrix[row][column] = 3;
                 field.removeEventListener('click', eventChoosePoint);
@@ -239,71 +242,105 @@ class Node {
   }
 }
 
-function astar(start, end, adjacencyMatrix) {
-  const numRows = adjacencyMatrix.length;
-  const numCols = adjacencyMatrix[0].length;
-
-  const startNode = new Node(start[0], start[1]);
-  const endNode = new Node(end[0], end[1]);
-
-  const openList = [];
-  openList.push(startNode);
-
-  const closedSet = new Set();
-  const exploredNodes = [];
-
-  const dx = [0, 1, 0, -1]; 
-  const dy = [-1, 0, 1, 0]; 
-
-  while (openList.length > 0) {
-      const current = openList.shift();
-      exploredNodes.push(current);
-
-      if (current.x === endNode.x && current.y === endNode.y) {
-          const path = [];
-          let currentPathNode = current;
-          while (currentPathNode !== null) {
-              path.push([currentPathNode.x, currentPathNode.y]);
-              currentPathNode = currentPathNode.parent;
-          }
-          return { path: path.reverse(), exploredNodes: exploredNodes };
-      }
-
-      closedSet.add(current.toString());
-
-      for (let i = 0; i < 4; i++) { 
-          const nx = current.x + dx[i];
-          const ny = current.y + dy[i];
-          if (nx >= 0 && nx < numRows && ny >= 0 && ny < numCols && adjacencyMatrix[nx][ny] !== 0) {
-              const neighbor = new Node(nx, ny);
-              if (!closedSet.has(neighbor.toString())) {
-                  const newG = current.g + adjacencyMatrix[nx][ny];
-                  const existingNeighbor = openList.find(n => n.x === neighbor.x && n.y === neighbor.y);
-                  if (existingNeighbor) {
-                      if (newG < existingNeighbor.g) {
-                          existingNeighbor.g = newG;
-                          existingNeighbor.f = existingNeighbor.g + existingNeighbor.h;
-                          existingNeighbor.parent = current;
-                      }
-                  } else {
-                      neighbor.g = newG;
-                      neighbor.h = Math.abs(endNode.x - neighbor.x) + Math.abs(endNode.y - neighbor.y);
-                      neighbor.f = neighbor.g + neighbor.h;
-                      neighbor.parent = current;
-                      openList.push(neighbor);
-                  }
-              }
-          }
-      }
-
-      openList.sort((a, b) => a.f - b.f);
+function astar(start, end, matrix) {
+    const numRows = matrix.length;
+    const numCols = matrix[0].length;
+  
+    const startNode = new Node(start[0], start[1]);
+    const endNode = new Node(end[0], end[1]);
+  
+    const openList = [];
+    openList.push(startNode);
+  
+    const closedSet = new Set();
+    const exploredNodes = [];
+  
+    const dx = [0, 1, 0, -1]; 
+    const dy = [-1, 0, 1, 0]; 
+  
+    while (openList.length > 0) {
+        const current = openList.shift();
+        exploredNodes.push(current);
+  
+        if (current.x === endNode.x && current.y === endNode.y) {
+            const path = [];
+            let currentPathNode = current;
+            while (currentPathNode !== null) {
+                path.push([currentPathNode.x, currentPathNode.y]);
+                currentPathNode = currentPathNode.parent;
+            }
+            return { path: path.reverse(), exploredNodes: exploredNodes };
+        }
+  
+        closedSet.add(current.toString());
+  
+        for (let i = 0; i < 4; i++) { 
+            const nx = current.x + dx[i];
+            const ny = current.y + dy[i];
+            if (nx >= 0 && nx < numRows && ny >= 0 && ny < numCols && matrix[nx][ny] !== 1) {
+                const neighbor = new Node(nx, ny);
+                if (!closedSet.has(neighbor.toString())) {
+                    const newG = current.g + matrix[nx][ny];
+                    const existingNeighbor = openList.find(n => n.x === neighbor.x && n.y === neighbor.y);
+                    if (existingNeighbor) {
+                        if (newG < existingNeighbor.g) {
+                            existingNeighbor.g = newG;
+                            existingNeighbor.f = existingNeighbor.g + existingNeighbor.h;
+                            existingNeighbor.parent = current;
+                        }
+                    } else {
+                        neighbor.g = newG;
+                        neighbor.h = Math.abs(endNode.x - neighbor.x) + Math.abs(endNode.y - neighbor.y);
+                        neighbor.f = neighbor.g + neighbor.h;
+                        neighbor.parent = current;
+                        openList.push(neighbor);
+                    }
+                }
+            }
+        }
+  
+        openList.sort((a, b) => a.f - b.f);
+    }
+  
+    return {path: null, exploredNodes: exploredNodes};
   }
-
-  return {path: null, exploredNodes: exploredNodes};
-}
+  
 
 
-function animateSearch(exploredNodes, end) {
+// function animateSearch(exploredNodes, end) {
+//     let index = 0;
+//     const intervalId = setInterval(function() {
+//         if (index < exploredNodes.length) {
+//             const { x, y } = exploredNodes[index];
+//             const blockId = `${x}-${y}`;
+//             const block = document.getElementById(blockId);
+//             block.style.backgroundColor = 'gray';
+//             index++;
+//         } else {
+//             clearInterval(intervalId);
+//             if (end) {
+//                 const blockId = `${end[0]}-${end[1]}`;
+//                 const block = document.getElementById(blockId);
+//                 block.style.backgroundColor = 'orange';
+//             }
+//         }
+//     }, 50);
+// }
+
+
+document.getElementById('startButton').addEventListener('click', function() {
+    const start = findStart(matrix);
+    const end = findEnd(matrix);
+    const { path, exploredNodes } = astar(start, end, matrix);
+    
+    if (path) {
+        animateSearchAndPath(exploredNodes, path, end);
+    } else {
+        alert("Нихуя не найдено!!! Лох ебаный")
+    }
+});
+
+function animateSearchAndPath(exploredNodes, path, end) {
     let index = 0;
     const intervalId = setInterval(function() {
         if (index < exploredNodes.length) {
@@ -314,29 +351,12 @@ function animateSearch(exploredNodes, end) {
             index++;
         } else {
             clearInterval(intervalId);
-            if (end) {
-                const blockId = `${end[0]}-${end[1]}`;
-                const block = document.getElementById(blockId);
-                block.style.backgroundColor = 'orange';
-            }
+            animatePath(path, end);
         }
     }, 50);
 }
 
-
-document.getElementById('startButton').addEventListener('click', function() {
-    const start = findStart(matrix);
-    const end = findEnd(matrix);
-    const { path, exploredNodes } = astar(start, end, matrix);
-    if (path) {
-        animateSearch(exploredNodes, end);
-        animatePath(path);
-    } else {
-        alert("Нихуя не найдено!!! Лох ебаный")
-    }
-});
-
-function animatePath(path) {
+function animatePath(path, end) {
     let index = 0;
     const animateStep = () => {
         if (index < path.length) {
@@ -351,8 +371,7 @@ function animatePath(path) {
     animateStep();
 
     setTimeout(() => {
-        const [x, y] = path[path.length - 1]; 
-        const blockId = `${x}-${y}`;
+        const blockId = `${end[0]}-${end[1]}`;
         const block = document.getElementById(blockId);
         block.style.backgroundColor = 'orange'; 
     }, path.length * 100); 
