@@ -2,13 +2,14 @@ const heightField = 550;
 const widthField = 550;
 let matrix;
 
-document.getElementById('generateButton').addEventListener('click', function() {
+document.getElementById('generateButton').addEventListener('click', function(event) {
     const height = parseInt(document.getElementById('inputSize').value);
     const width = parseInt(document.getElementById('inputSize').value);
     matrix = createMaze(width, height);
     const field = document.querySelector('.field');
     field.innerHTML = '';
     visualizationMaze(matrix, height, width, heightField, widthField);
+    event.stopPropagation();
 });
 
 function createMaze(width, height) {
@@ -357,7 +358,7 @@ document.getElementById('startButton').addEventListener('click', function() {
     }
 });
 
-function animateSearchAndPath(exploredNodes, path) {
+function animateSearchAndPath(exploredNodes, path, matrix) {
     let index = 0;
     const intervalId = setInterval(function() {
         if (index < exploredNodes.length) {
@@ -365,6 +366,7 @@ function animateSearchAndPath(exploredNodes, path) {
             const blockId = `${x}-${y}`;
             const block = document.getElementById(blockId);
             block.style.backgroundColor = 'gray';
+            // matrix[x][y] = 10;
             index++;
         } else {
             clearInterval(intervalId);
@@ -381,6 +383,7 @@ function animatePath(path) {
             const blockId = `${x}-${y}`;
             const block = document.getElementById(blockId);
             block.style.backgroundColor = 'white';
+            // matrix[x][y] = 11;
             index++;
             setTimeout(animateStep, 100); 
         }
