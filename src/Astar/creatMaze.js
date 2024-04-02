@@ -114,27 +114,55 @@ function visualizationMaze(matrix, height, width, heightField, widthField) {
     });
 }
 
-function checkStartPoint(matrix, height, width) {
+
+
+function checkSuccsessStartPoint(matrix, height, width) {
     let randomValue = Math.floor(Math.random() * 2) + 1;
     for (let i = 0; i < height; i++) {
         for (let j = 0; j < width; j++) {
             if (matrix[i][j] == 2) {
-                matrix[i][j] = randomValue;
+                matrix[i][j] = 0;
                 block = document.getElementById(`${i}-${j}`);
-                block.style.backgroundColor = matrix[i][j] == 1 ? 'red' : 'blue';
+                block.style.backgroundColor = 'blue';
             }
         }
     }
 }
 
-function checkEndPoint(matrix, height, width) {
+function checkSuccsessEndPoint(matrix, height, width) {
     let randomValue = Math.floor(Math.random() * 2) + 1;
     for (let i = 0; i < height; i++) {
         for (let j = 0; j < width; j++) {
             if (matrix[i][j] == 3) {
-                matrix[i][j] = randomValue;
+                matrix[i][j] = 0;
                 block = document.getElementById(`${i}-${j}`);
-                block.style.backgroundColor = matrix[i][j] == 1 ? 'red' : 'blue';
+                block.style.backgroundColor = 'blue';
+            }
+        }
+    }
+}
+
+function checkFaildStartPoint(matrix, height, width) {
+    let randomValue = Math.floor(Math.random() * 2) + 1;
+    for (let i = 0; i < height; i++) {
+        for (let j = 0; j < width; j++) {
+            if (matrix[i][j] == 2) {
+                matrix[i][j] = 1;
+                block = document.getElementById(`${i}-${j}`);
+                block.style.backgroundColor = 'red';
+            }
+        }
+    }
+}
+
+function checkFaildEndPoint(matrix, height, width) {
+    let randomValue = Math.floor(Math.random() * 2) + 1;
+    for (let i = 0; i < height; i++) {
+        for (let j = 0; j < width; j++) {
+            if (matrix[i][j] == 3) {
+                matrix[i][j] = 1;
+                block = document.getElementById(`${i}-${j}`);
+                block.style.backgroundColor = 'red';
             }
         }
     }
@@ -144,7 +172,7 @@ function chooseStartPoint(matrix) {
     const field = document.querySelector('.field');
     const height = matrix.length;
     const width = matrix[0].length;
-    checkStartPoint(matrix, height, width);
+    checkSuccsessStartPoint(matrix, height, width);
     field.addEventListener('click', eventChoosePoint);
     function eventChoosePoint(event) {
         const clickedBlock = event.target;
@@ -162,6 +190,9 @@ function chooseStartPoint(matrix) {
             }
             else{
                 alert("Хуйня переделывай");
+                clickedBlock.style.backgroundColor = 'yellow';
+                matrix[row][column] = 2;
+                checkFaildStartPoint(matrix, height, width)
                 field.removeEventListener('click', eventChoosePoint);
             }
         }
@@ -172,7 +203,7 @@ function chooseEndPoint(matrix) {
     const field = document.querySelector('.field');
     const height = matrix.length;
     const width = matrix[0].length;
-    checkEndPoint(matrix, height, width);
+    checkSuccsessEndPoint(matrix, height, width);
     field.addEventListener('click', eventChoosePoint);
     function eventChoosePoint(event) {
         const clickedBlock = event.target;
@@ -183,10 +214,16 @@ function chooseEndPoint(matrix) {
             if (matrix[row][column] !== 0){
                 clickedBlock.style.backgroundColor = 'green';
                 matrix[row][column] = 3;
+                for (let row of matrix){
+                    console.log(row.join('\t'));
+                }
                 field.removeEventListener('click', eventChoosePoint);
             }
             else{
                 alert("Хуйня переделывай");
+                clickedBlock.style.backgroundColor = 'yellow';
+                matrix[row][column] = 3;
+                checkFaildEndPoint(matrix, height, width)
                 field.removeEventListener('click', eventChoosePoint);
             }
         }
@@ -304,29 +341,6 @@ function astar(start, end, matrix) {
   
     return {path: null, exploredNodes: exploredNodes};
   }
-  
-
-
-// function animateSearch(exploredNodes, end) {
-//     let index = 0;
-//     const intervalId = setInterval(function() {
-//         if (index < exploredNodes.length) {
-//             const { x, y } = exploredNodes[index];
-//             const blockId = `${x}-${y}`;
-//             const block = document.getElementById(blockId);
-//             block.style.backgroundColor = 'gray';
-//             index++;
-//         } else {
-//             clearInterval(intervalId);
-//             if (end) {
-//                 const blockId = `${end[0]}-${end[1]}`;
-//                 const block = document.getElementById(blockId);
-//                 block.style.backgroundColor = 'orange';
-//             }
-//         }
-//     }, 50);
-// }
-
 
 document.getElementById('startButton').addEventListener('click', function() {
     const start = findStart(matrix);
@@ -336,11 +350,14 @@ document.getElementById('startButton').addEventListener('click', function() {
     if (path) {
         animateSearchAndPath(exploredNodes, path, end);
     } else {
-        alert("Нихуя не найдено!!! Лох ебаный")
+        const message = document.querySelector('text-faild');
+        if(message){
+            message.style.display = 'block';
+        }
     }
 });
 
-function animateSearchAndPath(exploredNodes, path, end) {
+function animateSearchAndPath(exploredNodes, path) {
     let index = 0;
     const intervalId = setInterval(function() {
         if (index < exploredNodes.length) {
@@ -351,12 +368,12 @@ function animateSearchAndPath(exploredNodes, path, end) {
             index++;
         } else {
             clearInterval(intervalId);
-            animatePath(path, end);
+            animatePath(path);
         }
     }, 50);
 }
 
-function animatePath(path, end) {
+function animatePath(path) {
     let index = 0;
     const animateStep = () => {
         if (index < path.length) {
@@ -369,10 +386,4 @@ function animatePath(path, end) {
         }
     };
     animateStep();
-
-    setTimeout(() => {
-        const blockId = `${end[0]}-${end[1]}`;
-        const block = document.getElementById(blockId);
-        block.style.backgroundColor = 'orange'; 
-    }, path.length * 100); 
 }
