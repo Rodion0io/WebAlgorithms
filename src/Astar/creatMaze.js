@@ -1,15 +1,20 @@
 const heightField = 552;
 const widthField = 552;
 let matrix;
+let flag = 0;
 
 document.getElementById('generateButton').addEventListener('click', function(event) {
-    const height = parseInt(document.getElementById('inputSize').value);
-    const width = parseInt(document.getElementById('inputSize').value);
-    matrix = createMaze(width, height);
-    const field = document.querySelector('.field');
-    field.innerHTML = '';
-    visualizationMaze(matrix, height, width, heightField, widthField);
-    event.stopPropagation();
+    if (flag == 0){
+        const height = parseInt(document.getElementById('inputSize').value);
+        const width = parseInt(document.getElementById('inputSize').value);
+        matrix = createMaze(width, height);
+        const field = document.querySelector('.field');
+        field.innerHTML = '';
+        visualizationMaze(matrix, height, width, heightField, widthField);
+    }
+    if (flag){
+        alert('error');
+    }
 });
 
 function createMaze(width, height){
@@ -280,7 +285,7 @@ class Node {
   }
 }
 
-function astar(start, end, matrix) {
+function astar(start, end, matrix){
     const numRows = matrix.length;
     const numCols = matrix[0].length;
   
@@ -363,6 +368,7 @@ function animateSearchAndPath(exploredNodes, path, matrix) {
     let index = 0;
     const intervalId = setInterval(function() {
         if (index < exploredNodes.length) {
+            flag = 1;
             const { x, y } = exploredNodes[index];
             const blockId = `${x}-${y}`;
             const block = document.getElementById(blockId);
@@ -379,6 +385,7 @@ function animateSearchAndPath(exploredNodes, path, matrix) {
 function animatePath(path) {
     let index = 0;
     const animateStep = () => {
+        flag = 1;
         if (index < path.length) {
             const [x, y] = path[index];
             const blockId = `${x}-${y}`;
@@ -387,6 +394,9 @@ function animatePath(path) {
             block.style.backgroundColor = 'white';
             index++;
             setTimeout(animateStep, 100);
+        }
+        else{
+            flag = 0;
         }
     };
     animateStep();
