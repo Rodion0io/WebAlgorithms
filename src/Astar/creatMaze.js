@@ -1,5 +1,5 @@
-const heightField = 550;
-const widthField = 550;
+const heightField = 552;
+const widthField = 552;
 let matrix;
 
 document.getElementById('generateButton').addEventListener('click', function(event) {
@@ -297,6 +297,7 @@ function astar(start, end, matrix) {
     const dy = [-1, 0, 1, 0]; 
   
     while (openList.length > 0) {
+        // поставить флаг
         const current = openList.shift();
         exploredNodes.push(current);
   
