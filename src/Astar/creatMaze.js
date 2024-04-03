@@ -12,11 +12,11 @@ document.getElementById('generateButton').addEventListener('click', function(eve
     event.stopPropagation();
 });
 
-function createMaze(width, height) {
+function createMaze(width, height){
     let maze = [];
-    for (let h = 0; h < height; h++) {
+    for (let h = 0; h < height; h++){
         let row = [];
-        for (let w = 0; w < width; w++) {
+        for (let w = 0; w < width; w++){
             row.push(1);
         }
         maze.push(row);
@@ -184,9 +184,9 @@ function chooseStartPoint(matrix) {
             if (matrix[row][column] !== 0){
                 clickedBlock.style.backgroundColor = 'yellow';
                 matrix[row][column] = 2;
-                for (let row of matrix){
-                    console.log(row.join('\t'));
-                }
+                // for (let row of matrix){
+                //     console.log(row.join('\t'));
+                // }
                 field.removeEventListener('click', eventChoosePoint);
             }
             else{
@@ -215,9 +215,9 @@ function chooseEndPoint(matrix) {
             if (matrix[row][column] !== 0){
                 clickedBlock.style.backgroundColor = 'green';
                 matrix[row][column] = 3;
-                for (let row of matrix){
-                    console.log(row.join('\t'));
-                }
+                // for (let row of matrix){
+                //     console.log(row.join('\t'));
+                // }
                 field.removeEventListener('click', eventChoosePoint);
             }
             else{
@@ -350,7 +350,7 @@ document.getElementById('startButton').addEventListener('click', function() {
     const { path, exploredNodes } = astar(start, end, matrix);
     
     if (path) {
-        animateSearchAndPath(exploredNodes, path, end);
+        animateSearchAndPath(exploredNodes, path, matrix);
     } else {
         const message = document.querySelector('text-faild');
         if(message){
@@ -366,8 +366,8 @@ function animateSearchAndPath(exploredNodes, path, matrix) {
             const { x, y } = exploredNodes[index];
             const blockId = `${x}-${y}`;
             const block = document.getElementById(blockId);
+            matrix[x][y] = 10;
             block.style.backgroundColor = 'gray';
-            // matrix[x][y] = 10;
             index++;
         } else {
             clearInterval(intervalId);
@@ -383,10 +383,10 @@ function animatePath(path) {
             const [x, y] = path[index];
             const blockId = `${x}-${y}`;
             const block = document.getElementById(blockId);
+            matrix[x][y] = 11;
             block.style.backgroundColor = 'white';
-            // matrix[x][y] = 11;
             index++;
-            setTimeout(animateStep, 100); 
+            setTimeout(animateStep, 100);
         }
     };
     animateStep();
