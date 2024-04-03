@@ -13,7 +13,7 @@ document.getElementById('generateButton').addEventListener('click', function(eve
         visualizationMaze(matrix, height, width, heightField, widthField);
     }
     if (flag){
-        alert('error');
+        alert('Дождитесь завершения алгоритма!');
     }
 });
 
@@ -179,6 +179,7 @@ function chooseStartPoint(matrix) {
     const height = matrix.length;
     const width = matrix[0].length;
     checkSuccsessStartPoint(matrix, height, width);
+    deleteBadItems(matrix)
     field.addEventListener('click', eventChoosePoint);
     function eventChoosePoint(event) {
         const clickedBlock = event.target;
@@ -210,6 +211,7 @@ function chooseEndPoint(matrix) {
     const height = matrix.length;
     const width = matrix[0].length;
     checkSuccsessEndPoint(matrix, height, width);
+    deleteBadItems(matrix)
     field.addEventListener('click', eventChoosePoint);
     function eventChoosePoint(event) {
         const clickedBlock = event.target;
@@ -237,11 +239,21 @@ function chooseEndPoint(matrix) {
 }
 
 document.getElementById('addStart').addEventListener('click', function() {
-    chooseStartPoint(matrix);
+    if (flag == 0){
+        chooseStartPoint(matrix);
+    }
+    if (flag){
+        alert('Дождитесь завершения алгоритма!');
+    }
 });
 
 document.getElementById('addEnd').addEventListener('click', function() {
-    chooseEndPoint(matrix);
+    if (flag == 0){
+        chooseEndPoint(matrix)
+    }
+    if (flag){
+        alert('Дождитесь завершения алгоритма!');
+    }
 });
 
 function findStart(matrix) {
@@ -269,6 +281,22 @@ function findEnd(matrix) {
     }
     return 0;
 }
+
+function deleteBadItems(matrix){
+    const length = matrix.length;
+    const width = matrix[0].length; 
+    for (let i = 0; i < length; i++){ 
+        for (let j = 0; j < width; j++){ 
+            if (matrix[i][j] == 10 || matrix[i][j] == 11){
+                const blockId = `${i}-${j}`;
+                const block = document.getElementById(blockId);
+                matrix[i][j] = 0;
+                block.style.backgroundColor = 'blue';
+            }
+        }
+    }
+}
+
 
 class Node {
   constructor(x, y) {
