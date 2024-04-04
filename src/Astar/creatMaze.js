@@ -90,13 +90,14 @@ function visualizationMaze(matrix, height, width, heightField, widthField) {
         // element.style.border = '1px solid black';
         element.style.height = `${heightItem}px`;
         element.style.width = `${widthField}px`;
+        element.style.boxSizing = 'border-box';
         field.appendChild(element);
         for (let j = 0; j < width; j++) {
             const childElement = document.createElement('div');
             childElement.classList.add('block__item');
             childElement.id = `${i}-${j}`;
             childElement.style.backgroundColor = matrix[i][j] == 1 ? 'red' : 'blue';
-            childElement.style.border = '1px solid black';
+            // childElement.style.border = '1px solid black';
             childElement.style.width = `${widthItem}px`;
             childElement.style.height = `${heightItem}px`;
             element.appendChild(childElement);
@@ -266,7 +267,7 @@ function findStart(matrix) {
             }
         }
     }
-    return 0;
+    return null;
 }
 
 function findEnd(matrix) {
@@ -279,7 +280,7 @@ function findEnd(matrix) {
             }
         }
     }
-    return 0;
+    return null;
 }
 
 function deleteBadItems(matrix){
@@ -330,7 +331,6 @@ function astar(start, end, matrix){
     const dy = [-1, 0, 1, 0]; 
   
     while (openList.length > 0) {
-        // поставить флаг
         const current = openList.shift();
         exploredNodes.push(current);
   
@@ -380,14 +380,24 @@ function astar(start, end, matrix){
 document.getElementById('startButton').addEventListener('click', function() {
     const start = findStart(matrix);
     const end = findEnd(matrix);
-    const { path, exploredNodes } = astar(start, end, matrix);
-    
-    if (path) {
-        animateSearchAndPath(exploredNodes, path, matrix);
-    } else {
-        const message = document.querySelector('text-faild');
-        if(message){
-            message.style.display = 'block';
+    if (start == null){
+        alert("Выберите начало лабиринта");
+    }
+    else if(end == null){
+        alert("Выберите окончание лабиринта");
+    }
+    else if(start == null && end == null){
+        alert("Выберите начало и окончание лабиринта");
+    }
+    else{
+        const { path, exploredNodes } = astar(start, end, matrix);
+        if (path) {
+            animateSearchAndPath(exploredNodes, path, matrix);
+        } else {
+            const message = document.querySelector('text-faild');
+            if(message){
+                message.style.display = 'block';
+            }
         }
     }
 });
