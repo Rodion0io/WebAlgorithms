@@ -1,9 +1,9 @@
-const heightField = 552;
-const widthField = 552;
+const heightField = 550;
+const widthField = 550;
 let matrix;
 let flag = 0;
 
-document.getElementById('generateButton').addEventListener('click', function(event) {
+document.getElementById('generateButton').addEventListener('click', function() {
     if (flag == 0){
         const height = parseInt(document.getElementById('inputSize').value);
         const width = parseInt(document.getElementById('inputSize').value);
