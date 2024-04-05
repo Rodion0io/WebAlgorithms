@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/src/css/style.css">
-    <title>Genetic</title>
+    <title>Алгоритм кластеризации</title>
 </head>
 <body>
     <header class="hero">
@@ -16,7 +16,7 @@
                     <a href="/index.html" class="link">Главная</a>
                     <a href="/src/Astar/Astar.html" class="link">А*</a>
                     <a href="#" class="link">Алгоритм кластеризации</a>
-                    <a href="#" class="link">Генетический алгоритм</a>
+                    <a href="/src/Genetic/genetic.html" class="link">Генетический алгоритм</a>
                     <a href="#" class="link">Муравьиный алгоритм</a>
                     <a href="#" class="link">Дерево решений</a>
                     <a href="#" class="link">Нейроная сеть</a>
@@ -30,29 +30,25 @@
     <!-- /.hero -->
     <div class="name-page">
         <div class="container">
-            <strong class="title">Genetic algorithm</strong>
+            <strong class="title">Алгоритм кластеризации(dbscan, k-средних, иерархическая кластеризация)</strong>
+                <div>
+                    <canvas></canvas>
+                    <script src="/src/Cluster/testCanvasPoints.js"></script>
+                        <div class="buttons">
+                            <button onclick="findClusters()">Найти кластеры</button>
+                            <button onclick="clearCanvas()">Сбросить поле</button>
+                            
+                        </div>
+
+                </div>
+
         </div>
         <!-- /.container -->
     </div>
-    <section class="interface">
-        <div class="container">
-            <div class="interface-block">
-                <div class="configure">
-                    <button class="button" id="delete">Очистить</button>
-                    <button class="button" id="startGenetic">Запустить алгоритм</button>
-                    <button class="button" id="deleteLastButton">Удалить последюю точку</button>
-                </div>
-                <!-- /.configure -->
-                <div class="field">
-                    <canvas id="genetic-field" width="550" height="550" ></canvas>
-                </div>
-                <!-- /.field -->
-            </div>
-            <!-- /.interface-block -->
-        </div>
-        <!-- /.container -->
-    </section>
-    <!-- /.interface -->
-    <script src="/src/Genetic/appGenetic/appGenetic.js"></script>
+    <!-- /.name-page -->
+
 </body>
+
+
+
 </html>
