@@ -106,7 +106,7 @@ function visualizationMaze(matrix, height, width, heightField, widthField) {
 
     field.addEventListener('click', function(event) {
         const clickedBlock = event.target;
-        if (clickedBlock.classList.contains('block__item')) {
+        if (clickedBlock.classList.contains('block__item') && flag == 0) {
             const clickedBlockId = clickedBlock.id.split('-');
             const row = parseInt(clickedBlockId[0]);
             const col = parseInt(clickedBlockId[1]);
@@ -117,6 +117,9 @@ function visualizationMaze(matrix, height, width, heightField, widthField) {
                 clickedBlock.style.backgroundColor = 'red';
                 matrix[row][col] = 1;
             }
+        }
+        else{
+            alert('Дождитесь завершения алгоритма!');
         }
     });
 }
