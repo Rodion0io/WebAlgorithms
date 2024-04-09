@@ -57,7 +57,7 @@ document.getElementById('deleteLastButton').addEventListener('click',
 
 // функция генерации особи
 function generateIndividum(pointsArray){
-    let individum = pointsArray.slice();
+    let individum = [pointsArray];
     individum.sort(() => Math.random() * 2 - 1);
     return individum;
 }
@@ -65,6 +65,10 @@ function generateIndividum(pointsArray){
 // Функция создания популяции 
 function creatPopulation(sizePopulation, pointsArray){
     let population = [];
+    for (let i = 0; i < sizePopulation; i++){
+        population.push(generateIndividum(pointsArray));
+    }
+    return population;
 }
 
 // Функция, которая будет рандомно выбирать двух родителей для дальнейшего размножения
