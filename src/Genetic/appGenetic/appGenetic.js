@@ -76,45 +76,40 @@ function creatPopulation(sizePopulation, pointsArray){
 }
 
 // Функция, которая будет рандомно выбирать двух родителей для дальнейшего размножения
-function chooseParent(sizePopulation){
-    let firstParent = Math.floor(Math.random() * sizePopulation) + 1;
-    let secondParent = Math.floor(Math.random() * sizePopulation) + 1;
-    if (secondParent == firstParent){
-        secondParent = Math.floor(Math.random() * sizePopulation) + 1;
-    }
-    return [firstParent, secondParent];
-}
-
-// Функция скрещивания родителей, будет возвращать пару потомков
-function crossing(firstParent, secondParent, sizePopulation){
-    // const breakPoint = Math.floor(Math.random() * firstParent.length - 1) + 1; 
-    const breakPoint = 2;
+function crossing(firstParent, secondParent, sizePopulation) {
+    const breakPoint = Math.floor(Math.random() * firstParent.length - 1) + 1; 
     let firstPartOfFirstChild = firstParent.slice(0, breakPoint);
     let firstPartOfSecondChild = secondParent.slice(0, breakPoint);
-    let usedPointsFirst = [firstParent.slice(0, breakPoint)];
-    let usedPointsSecond = [secondParent.slice(0, breakPoint)];
+    let usedPointFirst = firstParent.slice(0, breakPoint);
+    let usedPointSecond = secondParent.slice(0, breakPoint);;
     let secondPartOfFirstChild = [];
     let secondPartOfSecondChild = [];
-    for (let i = breakPoint; i < secondParent.length; i++){
-        if (!usedPointsSecond.includes(secondParent[i])){
+    
+    for (let i = breakPoint; i < secondParent.length; i++) {
+        if (!usedPointFirst.includes(secondParent[i])) {
             secondPartOfFirstChild.push(secondParent[i]);
-            usedPointsSecond.push(secondParent[i]);
+            usedPointFirst.push(secondParent[i]);
         }
     }
-    for (let i = breakPoint; i < firstParent.length; i++){
-        if (!usedPointsFirst.includes(firstParent[i])){
+
+    for (let i = breakPoint; i < firstParent.length; i++) {
+        if (!usedPointSecond.includes(firstParent[i])) {
             secondPartOfSecondChild.push(firstParent[i]);
-            usedPointsFirst.push(firstParent[i]);
+            usedPointSecond.push(firstParent[i]);
         }
     }
 
-    usedPointsFirst = [];
-    usedPointsSecond = [];
+    for (let i = breakPoint; i < firstParent.length; i++) {
+        if (!usedPointFirst.includes(firstParent[i]) && secondPartOfFirstChild.length + firstPartOfFirstChild.length + 1 <= firstParent.length) {
+            secondPartOfFirstChild.push(firstParent[i]);
+            usedPointFirst.push(firstParent[i]);
+        }
+    }
 
-    // Добавляем недостающие элементы первой части первого ребенка во вторую часть
-    for (let i = 0; i < firstPartOfFirstChild.length; i++) {
-        if (!secondPartOfFirstChild.includes(firstPartOfFirstChild[i])) {
-            secondPartOfFirstChild.push(firstPartOfFirstChild[i]);
+    for (let i = breakPoint; i < secondParent.length; i++) {
+        if (!usedPointSecond.includes(secondParent[i]) && secondPartOfSecondChild.length + firstPartOfSecondChild.length + 1 <= secondParent.length) {
+            secondPartOfSecondChild.push(secondParent[i]);
+            usedPointSecond.push(secondParent[i]);
         }
     }
 
@@ -124,12 +119,17 @@ function crossing(firstParent, secondParent, sizePopulation){
     return [firstChild, secondChild];
 }
 
-
 // Функция, которая будет проводить мутацию
-function mutation(mutationRatio, firstIndividum, secondIndividum){
-    let number = Math.floor(Math.random() * 100) + 1;
-
-}
+function mutate(individual, mutationRatio) {
+    if (Math.random() < mutationRatio) {
+      const index1 = Math.floor(Math.random() * individual.length);
+      let index2 = Math.floor(Math.random() * individual.length);
+      while (index1 === index2) {
+        index2 = Math.floor(Math.random() * individual.length);
+      }
+      [individual[index1], individual[index2]] = [individual[index2], individual[index1]];
+    }
+  }
 
 function geneticAlgorithm(pointsArray){
 
@@ -138,6 +138,6 @@ function geneticAlgorithm(pointsArray){
 document.getElementById('startGenetic').addEventListener('click', function(){
     let a = [0,3,1,4,2];
     let b = [0,2,4,3,1];
-    let res = crossing(a, b, 5);
+    let res = crossing(a,b ,5);
     console.log(res);
 })
