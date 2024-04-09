@@ -57,10 +57,14 @@ document.getElementById('deleteLastButton').addEventListener('click',
 
 // функция генерации особи
 function generateIndividum(pointsArray){
-    let individum = [pointsArray];
-    individum.sort(() => Math.random() * 2 - 1);
+    let individum = pointsArray.slice(); // Создаем копию массива pointsArray
+    for (let i = individum.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [individum[i], individum[j]] = [individum[j], individum[i]]; // Обмен элементов массива для перемешивания
+    }
     return individum;
 }
+
 
 // Функция создания популяции 
 function creatPopulation(sizePopulation, pointsArray){
@@ -73,16 +77,57 @@ function creatPopulation(sizePopulation, pointsArray){
 
 // Функция, которая будет рандомно выбирать двух родителей для дальнейшего размножения
 function chooseParent(sizePopulation){
-
+    let firstParent = Math.floor(Math.random() * sizePopulation) + 1;
+    let secondParent = Math.floor(Math.random() * sizePopulation) + 1;
+    if (secondParent == firstParent){
+        secondParent = Math.floor(Math.random() * sizePopulation) + 1;
+    }
+    return [firstParent, secondParent];
 }
 
 // Функция скрещивания родителей, будет возвращать пару потомков
-function crossing(firstParent, secondParent){
-  
+function crossing(firstParent, secondParent, sizePopulation){
+    // const breakPoint = Math.floor(Math.random() * firstParent.length - 1) + 1; 
+    const breakPoint = 2;
+    let firstPartOfFirstChild = firstParent.slice(0, breakPoint);
+    let firstPartOfSecondChild = secondParent.slice(0, breakPoint);
+    let usedPointsFirst = [firstParent.slice(0, breakPoint)];
+    let usedPointsSecond = [secondParent.slice(0, breakPoint)];
+    let secondPartOfFirstChild = [];
+    let secondPartOfSecondChild = [];
+    for (let i = breakPoint; i < secondParent.length; i++){
+        if (!usedPointsSecond.includes(secondParent[i])){
+            secondPartOfFirstChild.push(secondParent[i]);
+            usedPointsSecond.push(secondParent[i]);
+        }
+    }
+    for (let i = breakPoint; i < firstParent.length; i++){
+        if (!usedPointsFirst.includes(firstParent[i])){
+            secondPartOfSecondChild.push(firstParent[i]);
+            usedPointsFirst.push(firstParent[i]);
+        }
+    }
+
+    usedPointsFirst = [];
+    usedPointsSecond = [];
+
+    // Добавляем недостающие элементы первой части первого ребенка во вторую часть
+    for (let i = 0; i < firstPartOfFirstChild.length; i++) {
+        if (!secondPartOfFirstChild.includes(firstPartOfFirstChild[i])) {
+            secondPartOfFirstChild.push(firstPartOfFirstChild[i]);
+        }
+    }
+
+    let firstChild = firstPartOfFirstChild.concat(secondPartOfFirstChild);
+    let secondChild = firstPartOfSecondChild.concat(secondPartOfSecondChild);
+
+    return [firstChild, secondChild];
 }
+
 
 // Функция, которая будет проводить мутацию
 function mutation(mutationRatio, firstIndividum, secondIndividum){
+    let number = Math.floor(Math.random() * 100) + 1;
 
 }
 
@@ -91,6 +136,8 @@ function geneticAlgorithm(pointsArray){
 }
 
 document.getElementById('startGenetic').addEventListener('click', function(){
-    let array = generateIndividum(pointsArray);
-    console.log(array);
+    let a = [0,3,1,4,2];
+    let b = [0,2,4,3,1];
+    let res = crossing(a, b, 5);
+    console.log(res);
 })
