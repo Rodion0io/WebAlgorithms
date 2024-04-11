@@ -1,7 +1,7 @@
 const canvas = document.getElementById('genetic-field');
 const context = canvas.getContext('2d');
 let pointsArray = []; // {x:x, y:y}
-const population = 100;
+const sizePopulation = 100;
 let generationGenetic = 1000;
 
 
@@ -91,7 +91,7 @@ function chooseParents(population){
 }
 
 // Функция, которая будет рандомно выбирать двух родителей для дальнейшего размножения
-function crossing(firstParent, secondParent, sizePopulation) {
+function crossing(firstParent, secondParent){
     const breakPoint = Math.floor(Math.random() * firstParent.length - 1) + 1; 
     let firstPartOfFirstChild = firstParent.slice(0, breakPoint);
     let firstPartOfSecondChild = secondParent.slice(0, breakPoint);
@@ -135,7 +135,7 @@ function crossing(firstParent, secondParent, sizePopulation) {
 }
 
 // Функция, которая будет проводить мутацию
-function mutate(individum, mutationRatio){
+function mutate(individum){
     const mutationRatio = Math.floor(Math.random() * 101);
     if (Math.random() < mutationRatio){
         let firstIndex = Math.floor(Math.random() * individum.length);
@@ -149,10 +149,48 @@ function mutate(individum, mutationRatio){
     }
 }
 
-// Сам генетический алгоритм
-function geneticAlgorithm(pointsArray, mutationRatio, generationGenetic){
 
+
+// Сам генетический алгоритм
+function geneticAlgorithm(pointsArray, sizePopulation, generations) {
+    let population = creatPopulation(sizePopulation, pointsArray);
+    let bestRoute = population[0];
+    let minDistance = calculationWay(bestRoute);
+
+    for (let generation = 0; generation < generations; generation++) {
+        let newPopulation = [];
+
+        for (let i = 0; i < sizePopulation; i++) {
+            const parent1 = population[Math.floor(Math.random() * sizePopulation)];
+            const parent2 = population[Math.floor(Math.random() * sizePopulation)];
+            const child = crossing(parent1, parent2);
+            mutate(child);
+            newPopulation.push(child);
+        }
+
+        population = newPopulation;
+
+        for (let i = 0; i < population.length; i++) {
+            const currentDistance = calculationWay(population[i]);
+            if (currentDistance < minDistance) {
+                minDistance = currentDistance;
+                bestRoute = population[i];
+            }
+        }
+    }
+
+    return {route: bestRoute, distance: minDistance};
+}
+
+function creatNewPopulation(population, firstChild, secondChild){
+    population.splice(population.indexOf(Math.max(population)));
+    population.splice(population.indexOf(Math.max(population)));
+    population.push(firstChild);
+    population.push(secondChild);
+    return population;
 }
 
 document.getElementById('startGenetic').addEventListener('click', function(){
+    let {route, dist} = geneticAlgorithm(pointsArray, sizePopulation, generationGenetic);
+    console.log(route);
 })
