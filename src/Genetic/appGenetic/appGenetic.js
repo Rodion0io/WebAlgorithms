@@ -149,48 +149,44 @@ function mutate(individum){
     }
 }
 
-
-
 // Сам генетический алгоритм
 function geneticAlgorithm(pointsArray, sizePopulation, generations) {
     let population = creatPopulation(sizePopulation, pointsArray);
     let bestRoute = population[0];
-    let minDistance = calculationWay(bestRoute);
 
     for (let generation = 0; generation < generations; generation++) {
         let newPopulation = [];
 
         for (let i = 0; i < sizePopulation; i++) {
-            const parent1 = population[Math.floor(Math.random() * sizePopulation)];
-            const parent2 = population[Math.floor(Math.random() * sizePopulation)];
-            const child = crossing(parent1, parent2);
-            mutate(child);
-            newPopulation.push(child);
+            const [firstParent, secondParent] = chooseParents(population);
+            const [firstchild, secondChild] = crossing(firstParent, secondParent);
+            mutate(firstchild);
+            mutate(secondChild);
+            newPopulation.push(firstchild);
+            newPopulation.push(secondChild);
         }
 
         population = newPopulation;
 
-        for (let i = 0; i < population.length; i++) {
-            const currentDistance = calculationWay(population[i]);
-            if (currentDistance < minDistance) {
-                minDistance = currentDistance;
-                bestRoute = population[i];
-            }
+        population.sort((a, b) => calculationWay(a) - calculationWay(b));
+
+        let best = population[0];
+
+        if (best < bestRoute){
+            bestRoute = best;
         }
     }
 
-    return {route: bestRoute, distance: minDistance};
-}
-
-function creatNewPopulation(population, firstChild, secondChild){
-    population.splice(population.indexOf(Math.max(population)));
-    population.splice(population.indexOf(Math.max(population)));
-    population.push(firstChild);
-    population.push(secondChild);
-    return population;
+    return { route: bestRoute, population: population};
 }
 
 document.getElementById('startGenetic').addEventListener('click', function(){
-    let {route, dist} = geneticAlgorithm(pointsArray, sizePopulation, generationGenetic);
-    console.log(route);
+    let {route, population} = geneticAlgorithm(pointsArray, sizePopulation, generationGenetic);
+    if (pointsArray.length < 2){
+        alert('Добавьте точки');
+    }
+    else{
+        console.log(route);
+        console.log(population);
+    }
 })
