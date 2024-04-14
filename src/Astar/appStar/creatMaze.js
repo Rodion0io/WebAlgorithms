@@ -413,7 +413,7 @@ function animateSearchAndPath(exploredNodes, path, matrix) {
             const { x, y } = exploredNodes[index];
             const blockId = `${x}-${y}`;
             const block = document.getElementById(blockId);
-            matrix[x][y] = 10;
+            matrix[x][y] = 10;  
             block.style.backgroundColor = 'gray';
             index++;
         } else {
