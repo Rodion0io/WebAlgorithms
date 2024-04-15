@@ -132,7 +132,7 @@ function checkSuccsessStartPoint(matrix, height, width) {
         for (let j = 0; j < width; j++) {
             if (matrix[i][j] == 2) {
                 matrix[i][j] = 0;
-                block = document.getElementById(`${i}-${j}`);
+                let block = document.getElementById(`${i}-${j}`);
                 block.style.backgroundColor = 'blue';
             }
         }
@@ -145,7 +145,7 @@ function checkSuccsessEndPoint(matrix, height, width) {
         for (let j = 0; j < width; j++) {
             if (matrix[i][j] == 3) {
                 matrix[i][j] = 0;
-                block = document.getElementById(`${i}-${j}`);
+                let block = document.getElementById(`${i}-${j}`);
                 block.style.backgroundColor = 'blue';
             }
         }
