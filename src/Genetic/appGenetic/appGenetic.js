@@ -2,7 +2,7 @@ const canvas = document.getElementById('genetic-field');
 const context = canvas.getContext('2d');
 let pointsArray = []; // {x:x, y:y}
 const sizePopulation = 100;
-let generationGenetic = 100;
+let generationGenetic = 500;
 let flag = 0;
 
 // Функция, которая соединяет точки линией
@@ -209,7 +209,7 @@ function geneticAlgorithm(){
         if (iteration < generationGenetic){
             setTimeout(() => {
                 gen(iteration + 1);
-            }, 10);
+            }, 5);
         } else {
             drawLine(bestRoute);
         }

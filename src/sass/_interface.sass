@@ -25,18 +25,55 @@ body
     width: 90%
     display: flex
     justify-content: space-around
+    align-items: center
 
 .logo
     margin-left: 25px
 
-.link
-    text-decoration: none
-    color: $black-color
-    transition: all 0.2s
+.list
+    // text-decoration: none
+    list-style-type: none
+    &-link
+       text-decoration: none
+       color: $black-color
+       transition: all 0.2s
 
-.link:hover
+.list-link:hover
     color: $red-color
+
+.menu
+    display: none
+    position: relative
+    width: 40px
+    height: 40px
+    border: none
+    background-color: aqua
+    z-index: 2
+    &-line
+        position: absolute
+        width: 30px
+        height: 3px
+        background-color: #000
+        left: 5px
+        transition: transform .5s, opacity .5s, background-color .5s
+    &-line:nth-child(1)
+        transform: translateY(-10px)
+    &-line:nth-child(3)
+        transform: translateY(10px)
+        
+        
+.hero.open .menu-line:nth-child(1)
+    transform: translateY(0) rotate(45deg)
+    background-color: $white-color
+
+.hero.open .menu-line:nth-child(2)
+    opacity: 0
+
+.hero.open .menu-line:nth-child(3)
+    transform: translateY(0) rotate(-45deg)
+    background-color: $white-color
 
 
 .button
     padding: 7px 15px
+        

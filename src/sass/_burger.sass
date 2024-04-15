@@ -1,0 +1,22 @@
+@media (max-width: 992px)
+    .menu
+        display: block
+    .links
+        position: absolute
+        width: 300px
+        left: -350px
+        // right: 0
+        top: 0
+        background-color: purple
+        display: block
+        padding: 100px 20px 20px 20px
+        transition: transform .5s
+    .list
+        &-link
+            color: $white-color
+            font-size: 21px
+            display: block
+            padding: 10px 10px 
+    .hero.open .links
+        transform: translateX(100%)
+    
