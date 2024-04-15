@@ -2,7 +2,7 @@ const canvas = document.getElementById('genetic-field');
 const context = canvas.getContext('2d');
 let pointsArray = []; // {x:x, y:y}
 const sizePopulation = 100;
-let generationGenetic = 500;
+let generationGenetic = 4000;
 let flag = 0;
 
 // Функция, которая соединяет точки линией
@@ -75,7 +75,7 @@ document.getElementById('deleteLastButton').addEventListener('click',
 
 // Функция, которая высчитывает расстояние между точками
 function distBetwwenTwoPoints(firstPoint, secondPoint){
-    let distance = Math.sqrt(Math.pow((secondPoint.x - firstPoint.x), 2) + Math.pow((secondPoint.y - secondPoint.x), 2));
+    let distance = Math.sqrt(Math.pow((secondPoint.x - firstPoint.x), 2) + Math.pow((secondPoint.y - firstPoint.y), 2));
     return distance;
 }
 
@@ -107,13 +107,25 @@ function creatPopulation(sizePopulation, pointsArray){
     return population;
 }
 
-// Функция, которая выбирает двух родителей
-function chooseParents(population){
-    let firstParent = population[Math.floor(Math.random() * population.length)];
-    let secondParent = population[Math.floor(Math.random() * population.length)];
-    if (firstParent == secondParent){
-        secondParent = population[Math.floor(Math.random() * population.length)];
+// Функция для проведения турнирного отбора
+function tournamentSelection(population, tournamentSize) {
+    let tournament = [];
+    for (let i = 0; i < tournamentSize; i++) {
+        let randomIndex = Math.floor(Math.random() * population.length);
+        tournament.push(population[randomIndex]);
     }
+    
+    let bestIndividual = tournament.reduce((best, individual) => {
+        return calculationWay(individual) < calculationWay(best) ? individual : best;
+    });
+
+    return bestIndividual;
+}
+
+// Функция, которая выбирает двух родителей с помощью турнирного отбора
+function chooseParents(population, tournamentSize){
+    let firstParent = tournamentSelection(population, tournamentSize);
+    let secondParent = tournamentSelection(population, tournamentSize);
     
     return [firstParent, secondParent];
 }
@@ -164,7 +176,7 @@ function crossing(firstParent, secondParent){
 
 // Функция, которая будет проводить мутацию
 function mutate(individum){
-    const mutationRatio = Math.floor(Math.random() * 101);
+    const mutationRatio = 70;
     if (Math.random() < mutationRatio){
         let firstIndex = Math.floor(Math.random() * individum.length);
         let secondIndex = Math.floor(Math.random() * individum.length);
@@ -186,7 +198,7 @@ function geneticAlgorithm(){
         let newPopulation = [];
 
         for (let i = 0; i < sizePopulation; i++){
-            const [firstParent, secondParent] = chooseParents(population);
+            const [firstParent, secondParent] = chooseParents(population, 15);
             const [firstChild, secondChild] = crossing(firstParent, secondParent);
             mutate(firstChild);
             mutate(secondChild);
