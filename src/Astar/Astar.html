@@ -10,6 +10,11 @@
     <header class="hero">
         <div class="container">
             <nav class="hero-navbar">
+                <button class="menu" id="burger">
+                    <span class="menu-line"></span>
+                    <span class="menu-line"></span>
+                    <span class="menu-line"></span>
+                </button>
                 <div class="logo">logo</div>
                 <!-- /.logo -->
                 <ul class="links">
@@ -26,7 +31,7 @@
                         <a href="/src/Genetic/genetic.html" class="list-link">Генетический алгоритм</a>
                     </li>
                     <li class="list">
-                        <a href="#" class="list-link">Муравьиный алгоритм</a>
+                        <a href="/src/ant/ant.html" class="list-link">Муравьиный алгоритм</a>
                     </li>
                     <li class="list">
                         <a href="#" class="list-link">Дерево решений</a>
@@ -61,15 +66,18 @@
                         <input type="number" class="settings-input" placeholder="Введите число" id="inputSize">
                     </div>
                     <!-- /.input -->
-                    <div class="first-buttons">
-                        <button class="button buttons-generate" id="generateButton">Сгенерировать</button>
-                        <button class="button buttons-reset" id="startButton">Запуск</button>
+                    <div class="btn">
+                        <div class="first-buttons">
+                            <button class="button buttons-generate" id="generateButton">Сгенерировать</button>
+                            <button class="button buttons-reset" id="startButton">Запуск</button>
+                        </div>
+                        <div class="second-buttons">
+                            <button class="button add-st" id="addStart">Добавить начало</button>
+                            <button class="button add-en" id="addEnd">Добавить конец</button>
+                        </div>
+                        <!-- /.second-buttons -->
                     </div>
-                    <div class="second-buttons">
-                        <button class="button" id="addStart">Добавить начало</button>
-                        <button class="button" id="addEnd">Добавить конец</button>
-                    </div>
-                    <!-- /.second-buttons -->
+                    <!-- /.btn -->
                     <div class="work-text">
                         <div class="text-succsess" style="display: none;">Путь найден</div>
                         <div class="text-faild" style="display: none;">Нет путей</div>
@@ -85,6 +93,7 @@
     </section>
     <!-- /.interface -->
     <script src="/src/Astar/appStar/creatMaze.js" type="module"></script>
+    <script src="/burger.js"></script>
     <!-- <script src="/src/Astar/appStar/App.js" type="module"></script> -->
 </body>
 </html>

@@ -98,6 +98,14 @@ body {
   width: 150px;
 }
 
+@media (max-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+  .logo {
+    margin-right: 17px;
+  }
+}
 .interface-block {
   display: flex;
   justify-content: space-around;
@@ -141,13 +149,33 @@ body {
   border: 1px solid red;
 }
 
-.first-button {
-  margin-bottom: 15px;
+.first-buttons {
+  margin-bottom: 10px;
+}
+
+.buttons-generate {
+  margin-right: 7px;
+}
+
+.add-st {
+  margin-right: 7px;
 }
 
 @media (max-width: 992px) {
+  .interface-block {
+    flex-direction: column-reverse;
+  }
+  .field {
+    margin: auto;
+  }
+  .btn {
+    text-align: center;
+  }
+}
+@media (max-width: 992px) {
   .menu {
     display: block;
+    border-radius: 8px;
   }
   .links {
     position: absolute;

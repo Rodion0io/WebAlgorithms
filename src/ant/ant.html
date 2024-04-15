@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="src/css/style.css">
-    <title>Algorithms</title>
+    <link rel="stylesheet" href="/src/css/style.css">
+    <title>Муравьиный алгоритм</title>
 </head>
 <body>
     <header class="hero">
@@ -19,7 +19,7 @@
                 <!-- /.logo -->
                 <ul class="links">
                     <li class="list">
-                        <a href="#" class="list-link">Главная</a>
+                        <a href="/index.html" class="list-link">Главная</a>
                     </li>
                     <li class="list">
                         <a href="/src/Astar/Astar.html" class="list-link">А*</a>
@@ -31,7 +31,7 @@
                         <a href="/src/Genetic/genetic.html" class="list-link">Генетический алгоритм</a>
                     </li>
                     <li class="list">
-                        <a href="/src/ant/ant.html" class="list-link">Муравьиный алгоритм</a>
+                        <a href="#" class="list-link">Муравьиный алгоритм</a>
                     </li>
                     <li class="list">
                         <a href="#" class="list-link">Дерево решений</a>
@@ -50,17 +50,26 @@
     <div class="name-page">
         <div class="container">
             <div class="title">
-                <strong class="title-text">General page</strong>
+                <strong class="title-text">Ant Algoritm</strong>
             </div>
             <!-- /.title -->
-            <div class="text">
-                <p>Приветсвуем на нашем сайте, здесь представлены алгоримты...</p>
-            </div>
-            <!-- /.text -->
         </div>
         <!-- /.container -->
     </div>
-    <!-- /.name-page -->
+   <!-- /.name-page -->
+ 
+<div>
+    <div>
+        <canvas></canvas> 
+        <script  src = "/Users/vaceslav/Desktop/ant/Antcanvas.js"></script>
+        <script src = "/Users/vaceslav/Desktop/ant/Antanlg.js"></script>
+        
+        <div class="buttons">
+            <button class="button" onclick="emitDataFile();">Проложить путь</button>
+            <button class="button" onclick="draw()"> Муравьи , вперед! </button>
+            <button class="button" onclick="clearCanvas()">Отмена</button> 
+        </script>
+    </div>
+</div>
     <script src="/burger.js"></script>
-</body>
 </html>

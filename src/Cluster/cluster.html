@@ -10,6 +10,11 @@
     <header class="hero">
         <div class="container">
             <nav class="hero-navbar">
+                <button class="menu" id="burger">
+                    <span class="menu-line"></span>
+                    <span class="menu-line"></span>
+                    <span class="menu-line"></span>
+                </button>
                 <div class="logo">logo</div>
                 <!-- /.logo -->
                 <ul class="links">
@@ -26,7 +31,7 @@
                         <a href="/src/Genetic/genetic.html" class="list-link">Генетический алгоритм</a>
                     </li>
                     <li class="list">
-                        <a href="#" class="list-link">Муравьиный алгоритм</a>
+                        <a href="/src/ant/ant.html" class="list-link">Муравьиный алгоритм</a>
                     </li>
                     <li class="list">
                         <a href="#" class="list-link">Дерево решений</a>
@@ -52,8 +57,8 @@
                     <canvas></canvas>
                     <script src="/src/Cluster/testCanvasPoints.js"></script>
                         <div class="buttons">
-                            <button onclick="findClusters()">Найти кластеры</button>
-                            <button onclick="clearCanvas()">Сбросить поле</button>
+                            <button class="button" onclick="findClusters()">Найти кластеры</button>
+                            <button class="button" onclick="clearCanvas()">Сбросить поле</button>
                             
                         </div>
 
@@ -66,6 +71,6 @@
 
 </body>
 
-
+    <script src="/burger.js"></script>
 
 </html>
