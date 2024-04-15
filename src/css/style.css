@@ -9,6 +9,11 @@ body {
 }
 
 .title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.title-text {
   font-size: 28px;
   font-weight: 100;
 }
@@ -90,6 +95,7 @@ body {
 
 .button {
   padding: 7px 15px;
+  width: 150px;
 }
 
 .interface-block {
