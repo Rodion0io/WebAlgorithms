@@ -184,7 +184,7 @@ body {
     top: 0;
     background-color: purple;
     display: block;
-    padding: 100px 20px 20px 20px;
+    padding: 70px 20px 20px 20px;
     transition: transform 0.5s;
   }
   .list-link {
@@ -195,5 +195,26 @@ body {
   }
   .hero.open .links {
     transform: translateX(100%);
+  }
+}
+.configure {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.button-style {
+  margin-bottom: 7px;
+}
+
+@media (max-width: 992px) {
+  .configure {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .button-style {
+    margin-right: 7px;
   }
 }/*# sourceMappingURL=style.css.map */
