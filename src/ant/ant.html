@@ -49,27 +49,37 @@
     <!-- /.hero -->
     <div class="name-page">
         <div class="container">
-            <div class="title">
-                <strong class="title-text">Ant Algoritm</strong>
+            <div class="title"></div>
+                <strong class="title-text">Муравьиный алгоритм</strong>
             </div>
             <!-- /.title -->
         </div>
         <!-- /.container -->
     </div>
    <!-- /.name-page -->
- 
-<div>
-    <div>
-        <canvas></canvas> 
-        
-        <div class="buttons">
-            <button class="button" onclick="emitDataFile();">Проложить путь</button>
-            <button class="button" onclick="draw()"> Муравьи , вперед! </button>
-            <button class="button" onclick="clearCanvas()">Отмена</button> 
-        </script>
-    </div>
-</div>
-    <script src="/burger.js"></script>
+   <section class="interface">
+        <div class="container">
+            <div class="interface-block">
+                <div class="settings">
+                    <div class="buttons">
+                        <button class="button" onclick="emitDataFile();">Проложить путь</button>
+                        <button class="button" onclick="draw()"> Муравьи , вперед! </button>
+                        <button class="button" onclick="clearCanvas()">Отмена</button> 
+                    </div>
+                    <!-- /.buttons -->
+                </div>
+                <!-- /.settings -->
+                <div class="field">
+                    <canvas id="ant-field" width="550" height="550"></canvas>
+                </div>
+                <!-- /.field -->
+            </div>
+        </div>
+        <!-- /.container -->
+    </section>
+    <!-- /.interface -->
     <script src="/src/ant/Antanlg.js"></script>
     <script src="/src/ant/Antcanvas.js"></script>
-</html>
+    <script src="/burger.js"></script>
+    </body>
+    </html> 

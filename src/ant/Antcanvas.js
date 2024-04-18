@@ -1,7 +1,7 @@
 const canvas = document.querySelector("canvas")
 const ctx = canvas.getContext("2d")
 const points = []; // массив для хранения поставленных точек
-let size = 500
+let size = 550
 var flag1 = 1;
 var flag2 = 1;
 ///тест для канваса 
@@ -16,26 +16,23 @@ function setCanvasSize( size )   // устанавливаю размер кан
 
 function drawPoints() 
 {   
-    if ( flag1 == 1 && flag2 == 1) {
-    //if ( check.length == 0 ) {
-    setCanvasSize( size) // очищаем поле 
-    for (let i = 0; i < points.length ; i++) 
-    { // устанавливаем точки из списка points
-        ctx.beginPath();
-
-        ctx.fillRect(points[i].x - 3, points[i].y - 3, 10, 10);
-        ctx.fill();
+    if ( flag1 == 1 && flag2 == 1) 
+    {
+        setCanvasSize( size) // очищаем поле 
+        for (let i = 0; i < points.length ; i++) 
+        { // устанавливаем точки из списка points
+            ctx.beginPath();
+            ctx.fillRect(points[i].x - 3, points[i].y - 3, 10, 10);
+            ctx.fill();
     }
     Bob()
 }
-//}
 
-    //console.log(points) // тестовый вывод для проверки массива points
 }
 
 function clearCanvas()
 {
-    if ( flag1 == 1 && flag2 == 1){
+    if ( flag1 == 1 && flag2 == 1)  {
         canvas.width = canvas.width
         antBest.length = 0;
         points.length = 0;
@@ -83,6 +80,8 @@ let clearLine = false;
 
 function emitDataFile()
 {
+    if (flag2 == 1) 
+    {
     flag1 = 0;
    // console.log (currentPointIndex);
     let currentPoint = points[ antBest[currentPointIndex] ] , nextPoint;
@@ -115,18 +114,22 @@ function emitDataFile()
 
     else 
     {
+        Bob();
         flag1 = 1;
         currentPointIndex = 0;
         currentPoint = points[ antBest[0] ] ;
         progress = 0;
 
     }
+}
  
 }
 
 function draw()
 {
-    flag2 = 0;
+    if (flag1 == 1) 
+    {
+        flag2 = 0;
    // console.log (currentPointIndex);
    if (clearLine ) 
    {
@@ -171,12 +174,13 @@ function draw()
         clearLine = true;
     }
 
+    }
  
 }
 
 function drawLine(p1, p2, progress , from , to ) 
     {
-        const turquoiseShade = Math.floor( 255 - phero[from][to] * 50);
+        const turquoiseShade = Math.floor( 255 - phero[from][to] * 100);
         ctx.strokeStyle = `rgb(0, ${turquoiseShade}, 255)`;
         ctx.beginPath();
         ctx.fillRect(p2.x - 3, p2.y - 3, 10, 10);

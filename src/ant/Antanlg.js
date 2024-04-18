@@ -1,4 +1,5 @@
 //import points from "/Users/vaceslav/Desktop/aunt/Antcanvas.js"
+
 const antBest = [];
 var phero; 
 var MAX_CITIES 
@@ -125,11 +126,13 @@ function restartAnts()
     }
 }
 
+
 function antProduct(from , to)
 {
    
     return(( Math.pow( phero[from][to], ALPHA) * Math.pow( (1.0/ dist[from][to]), BETA)));
 }
+
 
 function selectNextCity(ant )
 {
@@ -279,17 +282,17 @@ function updateTrails()
             //console.log(phero[from][to]);
         }
     }
-    console.log(phero);
+
    // draw()
 
 }
 
 
-function Bob() 
+ function Bob() 
 {
 antBest.length = 0;
  MAX_CITIES = points.length ;
- MAX_DIST = Math.sqrt(500000);
+ MAX_DIST = Math.sqrt(550 * 550 + 550 * 500);
  MAX_TOUR = (MAX_CITIES * MAX_DIST);
  MAX_ANTS =  50;
 
@@ -366,4 +369,7 @@ for (let i = 0; i < MAX_CITIES; i++)
     }
     
 }
+
+
+
     

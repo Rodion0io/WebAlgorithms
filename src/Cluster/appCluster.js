@@ -2,8 +2,8 @@ const canvas = document.querySelector("canvas")
 const ctx = canvas.getContext("2d")
 const points = []; // массив для хранения поставленных точек
 const points1 =[]
-let height = 500
-let width = 500
+let height = 550
+let width = 550
 let colours = [ "red", "blue", "yellow", "green", "purple", "orange", "pink", "violet", "indigo", "turquoise", "lime", "maroon", "olive", "peach", "salmon", "lavender", "ivory", "sky blue", "baby blue", "mint green", "sienna", "tan", "beige", "khaki", "coral", "rose", "burgundy", "rust", "auburn", "sapphire", "emerald", "ruby", "pearl", "copper", "bronze", "plum", "orchid", "steel blue", "charcoal", "taupe", "mustard", "tangerine", "chartreuse", "jade", "amethyst", "cobalt", "peacock blue", "sage", "aquamarine", "sunflower yellow", "scarlet", "vermilion", "garnet", "mahogany", "tawny", "topaz", "periwinkle", "turmeric", "teak", "hazel", "cinnamon", "khaki", "vanilla", "almond", "sand", "sunrise orange", "dusk pink", "sky grey", "midnight blue", "celadon", "ivory", "pearl", "mushroom", "sienna", "sepia", "ochre", "amber", "coffee", "aubergine", "mauve", "taupe", "wheat", "olive green", "pea green", "cranberry", "claret", "sierra", "donkey grey", "ocean blue", "seafoam", "sapphire", "cobalt", "camel", "sandstone", "mocha", "platinum", "ammaranth", "raspberry" ] 
 let ammountOfClusters = 0
 ///тест для канваса dassdadas
