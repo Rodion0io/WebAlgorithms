@@ -49,31 +49,29 @@
     <!-- /.hero -->
     <div class="name-page">
         <div class="container">
-            <div class="title"></div>
-                <strong class="title-text">Муравьиный алгоритм</strong>
+            <div class="title">
+                <strong class="title-text">Ant Algorithm</strong>
             </div>
             <!-- /.title -->
         </div>
         <!-- /.container -->
     </div>
    <!-- /.name-page -->
-   <section class="interface">
+    <section class="interface">
         <div class="container">
             <div class="interface-block">
-                <div class="settings">
-                    <div class="buttons">
-                        <button class="button" onclick="emitDataFile();">Проложить путь</button>
-                        <button class="button" onclick="draw()"> Муравьи , вперед! </button>
-                        <button class="button" onclick="clearCanvas()">Отмена</button> 
-                    </div>
-                    <!-- /.buttons -->
+                <div class="configure">
+                    <button class="button button-style" onclick="emitDataFile();">Проложить путь</button>
+                        <button class="button button-style" onclick="draw()"> Муравьи, вперед! </button>
+                        <button class="button button-style" onclick="clearCanvas()">Отмена</button>
                 </div>
-                <!-- /.settings -->
+                <!-- /.configure -->
                 <div class="field">
                     <canvas id="ant-field" width="550" height="550"></canvas>
                 </div>
                 <!-- /.field -->
             </div>
+            <!-- /.interface-block -->
         </div>
         <!-- /.container -->
     </section>

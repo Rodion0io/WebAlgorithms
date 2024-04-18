@@ -50,22 +50,27 @@
     <div class="name-page">
         <div class="container">
             <div class="title">
-                <strong class="title-text">Алгоритм кластеризации(dbscan, k-средних, иерархическая кластеризация)</strong>
+                <strong class="title-text long">Алгоритм кластеризации(dbscan, k-средних, иерархическая кластеризация)</strong>
             </div>
-                <div>
-                    <canvas></canvas>
-                        <div class="buttons">
-                            <button class="button" onclick="findClusters()">Найти кластеры</button>
-                            <button class="button" onclick="clearCanvas()">Сбросить поле</button>
-                            
-                        </div>
-
-                </div>
-
+            <!-- /.title -->
         </div>
         <!-- /.container -->
     </div>
     <!-- /.name-page -->
+    <section class="interface">
+        <div class="container">
+            <div class="interface-block">
+                <div class="configure">
+                    <button class="button button-style" onclick="findClusters()">Найти кластер</button>
+                    <button class="button button-style" onclick="clearCanvas()">Очистить</button>
+                </div>
+                <div class="field">
+                    <canvas id="clust-field" width="550" height="550"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.interface -->
     <script src="/src/Cluster/appCluster.js"></script>
     <script src="/burger.js"></script>
 </body>

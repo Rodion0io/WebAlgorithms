@@ -11,7 +11,7 @@ function setCanvasSize( size )   // устанавливаю размер кан
     //if (check.length != 0)
     canvas.width = size
     canvas.height = size
-    ctx.strokeRect(0, 0, canvas.width, canvas.height)
+    // ctx.strokeRect(0, 0, canvas.width, canvas.height)
 }
 
 function drawPoints() 
