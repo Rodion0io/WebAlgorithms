@@ -4,9 +4,7 @@ import { visualizationMaze } from "./visualization.js";
 import { chooseStartPoint, chooseEndPoint } from "./choosePoints.js";
 import { findStart, findEnd } from "./operationWithPoints.js";
 import { astar } from "./AstarAlgorithm.js";
-import { animateSearchAndPath, animatePath } from "./animate.js";
-
-let flag = 0;
+import { animateSearchAndPath, flag } from "./animate.js";
 let matrix;
 
 document.getElementById('generateButton').addEventListener('click', function() {
@@ -44,24 +42,29 @@ document.getElementById('addEnd').addEventListener('click', function(){
 document.getElementById('startButton').addEventListener('click', function() {
     const start = findStart(matrix);
     const end = findEnd(matrix);
-    if (start == null){
-        alert("Выберите начало лабиринта");
-    }
-    else if(end == null){
-        alert("Выберите окончание лабиринта");
-    }
-    else if(start == null && end == null){
-        alert("Выберите начало и окончание лабиринта");
-    }
-    else{
-        const { path, exploredNodes } = astar(start, end, matrix);
-        if (path) {
-            animateSearchAndPath(exploredNodes, path, matrix);
-        } else {
-            const message = document.querySelector('text-faild');
-            if(message){
-                message.style.display = 'block';
+    if (!flag){
+        if (start == null){
+            alert("Выберите начало лабиринта");
+        }
+        else if(end == null){
+            alert("Выберите окончание лабиринта");
+        }
+        else if(start == null && end == null){
+            alert("Выберите начало и окончание лабиринта");
+        }
+        else{
+            const { path, exploredNodes } = astar(start, end, matrix);
+            if (path) {
+                animateSearchAndPath(exploredNodes, path, matrix);
+            } else {
+                const message = document.querySelector('text-faild');
+                if(message){
+                    message.style.display = 'block';
+                }
             }
         }
+    }
+    else{
+        alert('Дождитесь завершения алгоритма!');
     }
 });

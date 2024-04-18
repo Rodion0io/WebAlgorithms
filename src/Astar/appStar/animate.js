@@ -1,4 +1,5 @@
-let flag = 0;
+export let flag = 0;
+
 export function animateSearchAndPath(exploredNodes, path, matrix){
     let index = 0;
     const intervalId = setInterval(function() {
@@ -14,7 +15,7 @@ export function animateSearchAndPath(exploredNodes, path, matrix){
             clearInterval(intervalId);
             animatePath(matrix, path);
         }
-    }, 50);
+    }, 5);
 }
 
 export function animatePath(matrix, path){

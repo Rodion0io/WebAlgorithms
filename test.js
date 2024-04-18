@@ -422,7 +422,7 @@ function animateSearchAndPath(exploredNodes, path, matrix) {
             clearInterval(intervalId);
             animatePath(path);
         }
-    }, 50);
+    }, 5);
 }
 
 function animatePath(path) {
@@ -436,7 +436,7 @@ function animatePath(path) {
             matrix[x][y] = 11;
             block.style.backgroundColor = 'white';
             index++;
-            setTimeout(animateStep, 100);
+            setTimeout(animateStep, 10);
         }
         else{
             flag = 0;
