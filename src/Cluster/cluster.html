@@ -19,25 +19,25 @@
                 <!-- /.logo -->
                 <ul class="links">
                     <li class="list">
-                        <a href="/index.html" class="list-link">Главная</a>
+                        <a href="/index.html" class="list-link general">Главная</a>
                     </li>
                     <li class="list">
-                        <a href="/src/Astar/Astar.html" class="list-link">А*</a>
+                        <a href="/src/Astar/Astar.html" class="list-link" id="stars">А*</a>
                     </li>
                     <li class="list">
-                        <a href="#" class="list-link">Алгоритм кластеризации</a>
+                        <a href="#" class="list-link" id="clust">Алгоритм кластеризации</a>
                     </li>
                     <li class="list">
-                        <a href="/src/Genetic/genetic.html" class="list-link">Генетический алгоритм</a>
+                        <a href="/src/Genetic/genetic.html" class="list-link" id="gen">Генетический алгоритм</a>
                     </li>
                     <li class="list">
-                        <a href="/src/ant/ant.html" class="list-link">Муравьиный алгоритм</a>
+                        <a href="/src/ant/ant.html" class="list-link" id="antt">Муравьиный алгоритм</a>
                     </li>
                     <li class="list">
-                        <a href="#" class="list-link">Дерево решений</a>
+                        <a href="#" class="list-link" id="tr">Дерево решений</a>
                     </li>
                     <li class="list">
-                        <a href="#" class="list-link">Нейроная сеть</a>
+                        <a href="#" class="list-link" id="neu">Нейроная сеть</a>
                     </li>
                 </ul>
                 <!-- /.links -->
@@ -52,10 +52,8 @@
             <div class="title">
                 <strong class="title-text">Алгоритм кластеризации(dbscan, k-средних, иерархическая кластеризация)</strong>
             </div>
-            <!-- /.title -->
                 <div>
                     <canvas></canvas>
-                    <script src="/src/Cluster/testCanvasPoints.js"></script>
                         <div class="buttons">
                             <button class="button" onclick="findClusters()">Найти кластеры</button>
                             <button class="button" onclick="clearCanvas()">Сбросить поле</button>
@@ -68,9 +66,10 @@
         <!-- /.container -->
     </div>
     <!-- /.name-page -->
-
+    <script src="/src/Cluster/appCluster.js"></script>
+    <script src="/burger.js"></script>
 </body>
 
-    <script src="/burger.js"></script>
+
 
 </html>

@@ -35,13 +35,14 @@ function drawPoints()
 
 function clearCanvas()
 {
-    canvas.width = canvas.width
-    antBest.length = 0;
-    points.length = 0;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if ( flag1 == 1 && flag2 == 1){
+        canvas.width = canvas.width
+        antBest.length = 0;
+        points.length = 0;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    setCanvasSize(size)
-    
+        setCanvasSize(size)
+    }
 }
 
 setCanvasSize(size)
@@ -142,7 +143,7 @@ function draw()
     ctx.fill;
     drawLine(currentPoint, nextPoint, progress1 , currentPointIndex1 , NextIndex );
 
-    progress1 += 0.05;
+    progress1 += 0.1;
 
     if (progress1 >= 1 && (NextIndex + 1 >= points.length )  ) 
     {

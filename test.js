@@ -1,3 +1,5 @@
+// Здесь остается функция генерирования матрицы, нужно передать длину, ширину
+
 const heightField = 550;
 const widthField = 550;
 let matrix;
@@ -132,7 +134,7 @@ function checkSuccsessStartPoint(matrix, height, width) {
         for (let j = 0; j < width; j++) {
             if (matrix[i][j] == 2) {
                 matrix[i][j] = 0;
-                block = document.getElementById(`${i}-${j}`);
+                let block = document.getElementById(`${i}-${j}`);
                 block.style.backgroundColor = 'blue';
             }
         }
@@ -145,7 +147,7 @@ function checkSuccsessEndPoint(matrix, height, width) {
         for (let j = 0; j < width; j++) {
             if (matrix[i][j] == 3) {
                 matrix[i][j] = 0;
-                block = document.getElementById(`${i}-${j}`);
+                let block = document.getElementById(`${i}-${j}`);
                 block.style.backgroundColor = 'blue';
             }
         }
@@ -200,8 +202,8 @@ function chooseStartPoint(matrix) {
                 field.removeEventListener('click', eventChoosePoint);
             }
             else{
-                alert("Хуйня переделывай");
-                clickedBlock.style.backgroundColor = 'yellow';
+                alert("Сюда нельзя ставить точку");
+                clickedBlock.style.backgroundColor = 'red';
                 matrix[row][column] = 2;
                 checkFaildStartPoint(matrix, height, width)
                 field.removeEventListener('click', eventChoosePoint);
@@ -232,10 +234,10 @@ function chooseEndPoint(matrix) {
                 field.removeEventListener('click', eventChoosePoint);
             }
             else{
-                alert("Хуйня переделывай");
-                clickedBlock.style.backgroundColor = 'yellow';
+                alert("Сюда нельзя ставить точку");
+                clickedBlock.style.backgroundColor = 'red';
                 matrix[row][column] = 3;
-                checkFaildEndPoint(matrix, height, width)
+                checkFaildEndPoint(matrix, height, width);
                 field.removeEventListener('click', eventChoosePoint);
             }
         }
@@ -251,7 +253,7 @@ document.getElementById('addStart').addEventListener('click', function() {
     }
 });
 
-document.getElementById('addEnd').addEventListener('click', function() {
+document.getElementById('addEnd').addEventListener('click', function(){
     if (flag == 0){
         chooseEndPoint(matrix)
     }
@@ -263,8 +265,8 @@ document.getElementById('addEnd').addEventListener('click', function() {
 function findStart(matrix) {
     const height = matrix.length;
     const width = matrix[0].length;
-    for (let i = 0; i < height; i++) {
-        for (let j = 0; j < width; j++) {
+    for (let i = 0; i < height; i++){
+        for (let j = 0; j < width; j++){
             if (matrix[i][j] == 2) {
                 return [i, j];
             }

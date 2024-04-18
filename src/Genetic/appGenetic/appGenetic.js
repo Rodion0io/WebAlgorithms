@@ -1,8 +1,7 @@
 const canvas = document.getElementById('genetic-field');
 const context = canvas.getContext('2d');
 let pointsArray = []; // {x:x, y:y}
-const sizePopulation = 100;
-let generationGenetic = 4000;
+const sizePopulation = 4000;
 let flag = 0;
 
 // Функция, которая соединяет точки линией
@@ -12,12 +11,33 @@ function drawLine(individum){
         context.beginPath();
         context.moveTo(individum[i].x, individum[i].y);
         context.lineTo(individum[i + 1].x, individum[i + 1].y);
+        context.strokeStyle = 'black'
         context.stroke();
         context.closePath();
     }
     context.beginPath();
     context.moveTo(individum[individum.length - 1].x, individum[individum.length - 1].y);
     context.lineTo(individum[0].x, individum[0].y);
+    context.strokeStyle = 'black'
+    context.stroke();
+    context.closePath();
+}
+
+// Функция, которая перекрашивает окончательный путь
+function drawFinallyLine(individum){
+    deleteBadWay();
+    for (let i = 0; i < individum.length - 1; i++){
+        context.beginPath();
+        context.moveTo(individum[i].x, individum[i].y);
+        context.lineTo(individum[i + 1].x, individum[i + 1].y);
+        context.strokeStyle = 'red'
+        context.stroke();
+        context.closePath();
+    }
+    context.beginPath();
+    context.moveTo(individum[individum.length - 1].x, individum[individum.length - 1].y);
+    context.lineTo(individum[0].x, individum[0].y);
+    context.strokeStyle = 'red'
     context.stroke();
     context.closePath();
 }
@@ -36,39 +56,54 @@ function deleteBadWay(){
 
 // Добавление точек в канвасе
 canvas.addEventListener('click', function(event){
-    deleteBadWay();
-    context.beginPath();
-    let firstPoint = event.offsetX;
-    let secondPoint = event.offsetY;
-    let radius = 4;
-    context.arc(firstPoint, secondPoint, radius, 0, Math.PI * 2);
-    context.closePath();
-    context.fill();
-    pointsArray.push({x: firstPoint, y: secondPoint});
+    if (!flag){
+        deleteBadWay();
+        context.beginPath();
+        let firstPoint = event.offsetX;
+        let secondPoint = event.offsetY;
+        let radius = 4;
+        context.arc(firstPoint, secondPoint, radius, 0, Math.PI * 2);
+        context.closePath();
+        context.fill();
+        pointsArray.push({x: firstPoint, y: secondPoint});
+    }
+    else{
+        alert("Дождитесь завершения алгоритма");
+    }
 });
 
 //Очищение канваса
 document.getElementById('delete').addEventListener('click', function(){
-    if (pointsArray.length == 0){
-        alert("Точек нет!");
+    if (!flag){
+        if (pointsArray.length == 0){
+            alert("Точек нет!");
+        }
+        else{
+            context.clearRect(0, 0, 550, 550);
+            pointsArray = [];
+        }
     }
     else{
-        context.clearRect(0, 0, 550, 550);
-        pointsArray = [];
+        alert("Дождитесь завершения алгоритма");
     }
 })
 
 // Удаление последенй точки
 document.getElementById('deleteLastButton').addEventListener('click', 
     function deleteLastPoint(){
-        if (pointsArray.length == 0){
-            alert("Точек нет!");
+        if (!flag){
+            if (pointsArray.length == 0){
+                alert("Точек нет!");
+            }
+            else{
+                deleteBadWay()
+                const {x, y} = pointsArray.pop();
+                let radius = 4;
+                context.clearRect(x - radius, y - radius, radius * 2, radius * 2);
+            }
         }
         else{
-            deleteBadWay()
-            const {x, y} = pointsArray.pop();
-            let radius = 4;
-            context.clearRect(x - radius, y - radius, radius * 2, radius * 2);
+            alert("Дождитесь завершения алгоритма");
         }
     }
 );
@@ -193,6 +228,7 @@ function mutate(individum){
 function geneticAlgorithm(){
     let population = creatPopulation(sizePopulation, pointsArray);
     let bestRoute = population[0];
+    let generationGenetic = pointsArray.length * 5;
 
     function gen(iteration){
         let newPopulation = [];
@@ -219,11 +255,14 @@ function geneticAlgorithm(){
         drawLine(currentBest);
 
         if (iteration < generationGenetic){
+            flag = 1;
             setTimeout(() => {
                 gen(iteration + 1);
             }, 5);
-        } else {
-            drawLine(bestRoute);
+        } 
+        else{
+            drawFinallyLine(bestRoute);
+            flag = 0
         }
     }
 
@@ -231,5 +270,11 @@ function geneticAlgorithm(){
 }
 
 document.getElementById('startGenetic').addEventListener('click', function(){
-    geneticAlgorithm();
+    if (!flag){
+        geneticAlgorithm();
+    }
+    else{
+        alert("Дождитесь завершения алгоритма");
+    }
+    
 });

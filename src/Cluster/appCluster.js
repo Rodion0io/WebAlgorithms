@@ -2,10 +2,10 @@ const canvas = document.querySelector("canvas")
 const ctx = canvas.getContext("2d")
 const points = []; // массив для хранения поставленных точек
 const points1 =[]
-let height =500
-let width =1000
+let height = 500
+let width = 500
 let colours = [ "red", "blue", "yellow", "green", "purple", "orange", "pink", "violet", "indigo", "turquoise", "lime", "maroon", "olive", "peach", "salmon", "lavender", "ivory", "sky blue", "baby blue", "mint green", "sienna", "tan", "beige", "khaki", "coral", "rose", "burgundy", "rust", "auburn", "sapphire", "emerald", "ruby", "pearl", "copper", "bronze", "plum", "orchid", "steel blue", "charcoal", "taupe", "mustard", "tangerine", "chartreuse", "jade", "amethyst", "cobalt", "peacock blue", "sage", "aquamarine", "sunflower yellow", "scarlet", "vermilion", "garnet", "mahogany", "tawny", "topaz", "periwinkle", "turmeric", "teak", "hazel", "cinnamon", "khaki", "vanilla", "almond", "sand", "sunrise orange", "dusk pink", "sky grey", "midnight blue", "celadon", "ivory", "pearl", "mushroom", "sienna", "sepia", "ochre", "amber", "coffee", "aubergine", "mauve", "taupe", "wheat", "olive green", "pea green", "cranberry", "claret", "sierra", "donkey grey", "ocean blue", "seafoam", "sapphire", "cobalt", "camel", "sandstone", "mocha", "platinum", "ammaranth", "raspberry" ] 
-let ammountOfClusters =0
+let ammountOfClusters = 0
 ///тест для канваса dassdadas
 
 function setCanvasSize(width, height)   // устанавливаю размер канвас и делаю обводку
@@ -47,7 +47,7 @@ function dbscan(points, epsilon, minPts)
 {
     clearClusterData(points)
     let visited = new Set()
-    let clusterNum =0
+    let clusterNum = 0
     for (let point of points) 
     {
         if (visited.has(point)) {continue}
@@ -258,7 +258,7 @@ canvas.addEventListener("click", function(event)
 
     for (let i = 0; i < points.length; i++) {
         
-        if (Math.abs(points[i].x - x) < 10 && Math.abs(points[i].y - y) < 10) { // если точка поставлена на другую точку, то удаляем их
+        if (Math.abs(points[i].x - x) < 10 && Math.abs(points[i].y - y) < 10){ // если точка поставлена на другую точку, то удаляем их
             points.splice(i, 1);
             drawPoints();
             return;

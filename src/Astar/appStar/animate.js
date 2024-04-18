@@ -1,4 +1,5 @@
-export function animateSearchAndPath(exploredNodes, path, matrix) {
+let flag = 0;
+export function animateSearchAndPath(exploredNodes, path, matrix){
     let index = 0;
     const intervalId = setInterval(function() {
         if (index < exploredNodes.length) {
@@ -11,15 +12,14 @@ export function animateSearchAndPath(exploredNodes, path, matrix) {
             index++;
         } else {
             clearInterval(intervalId);
-            animatePath(path);
+            animatePath(matrix, path);
         }
     }, 50);
 }
 
-function animatePath(path) {
+export function animatePath(matrix, path){
     let index = 0;
     const animateStep = () => {
-        flag = 1;
         if (index < path.length) {
             const [x, y] = path[index];
             const blockId = `${x}-${y}`;
