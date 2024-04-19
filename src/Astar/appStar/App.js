@@ -5,7 +5,7 @@ import { chooseStartPoint, chooseEndPoint } from "./choosePoints.js";
 import { findStart, findEnd } from "./operationWithPoints.js";
 import { astar } from "./AstarAlgorithm.js";
 import { animateSearchAndPath, flag } from "./animate.js";
-let matrix;
+export let matrix;
 
 document.getElementById('generateButton').addEventListener('click', function() {
     if (flag == 0){

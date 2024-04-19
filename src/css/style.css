@@ -98,10 +98,6 @@ body {
   width: 150px;
 }
 
-.list.star .list-link {
-  color: red;
-}
-
 @media (max-width: 992px) {
   .container {
     max-width: 960px;

@@ -31,7 +31,7 @@ export function visualizationMaze(matrix, height, width, heightField, widthField
     field.addEventListener('click', function(event) {
         const clickedBlock = event.target;
         if (clickedBlock.classList.contains('block__item') && flag == 0){
-            deleteBadItems(matrix);
+            // deleteBadItems(matrix);
             const clickedBlockId = clickedBlock.id.split('-');
             const row = parseInt(clickedBlockId[0]);
             const col = parseInt(clickedBlockId[1]);

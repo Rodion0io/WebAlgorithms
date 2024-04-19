@@ -1,10 +1,3 @@
-// Здесь остается функция генерирования матрицы, нужно передать длину, ширину
-
-// const heightField = 550;
-// const widthField = 550;
-// let matrix;
-// let flag = 0;
-
 import { heightField, widthField } from "./constantVariable.js";
 
 export function createMaze(width, height){

@@ -1,6 +1,7 @@
 export let flag = 0;
+import { matrix } from "./App.js";
 
-export function animateSearchAndPath(exploredNodes, path, matrix){
+export function animateSearchAndPath(exploredNodes, path, matrix) {
     let index = 0;
     const intervalId = setInterval(function() {
         if (index < exploredNodes.length) {
@@ -13,27 +14,34 @@ export function animateSearchAndPath(exploredNodes, path, matrix){
             index++;
         } else {
             clearInterval(intervalId);
-            animatePath(matrix, path);
+            animatePath(path);
         }
-    }, 5);
+    }, 10);
 }
 
-export function animatePath(matrix, path){
+function animatePath(path) {
     let index = 0;
+    if (path.length === 0){
+        alert("Пути нет");
+        flag = 0;
+        return;
+    }
     const animateStep = () => {
-        if (index < path.length) {
-            const [x, y] = path[index];
-            const blockId = `${x}-${y}`;
-            const block = document.getElementById(blockId);
-            matrix[x][y] = 11;
-            block.style.backgroundColor = 'white';
-            index++;
-            setTimeout(animateStep, 10);
-        }
-        else{
-            clearTimeout(animateStep);
-            flag = 0;
-        }
+        flag = 1;
+            if (index < path.length) {
+                const [x, y] = path[index];
+                const blockId = `${x}-${y}`;
+                const block = document.getElementById(blockId);
+                matrix[x][y] = 11;
+                block.style.backgroundColor = 'white';
+                index++;
+                setTimeout(animateStep, 10);
+            }
+            else{
+                clearTimeout(animateStep);
+                flag = 0;
+            }
+        
     };
     animateStep();
 }
