@@ -28,9 +28,10 @@ export function animatePath(matrix, path){
             matrix[x][y] = 11;
             block.style.backgroundColor = 'white';
             index++;
-            setTimeout(animateStep, 100);
+            setTimeout(animateStep, 10);
         }
         else{
+            clearTimeout(animateStep);
             flag = 0;
         }
     };
