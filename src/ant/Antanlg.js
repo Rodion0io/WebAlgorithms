@@ -18,7 +18,6 @@ var E_ACO; //
 var cities; // матрица городов
 var dist; // матрица расстояний
 var best; //
-var phero1;
 var bestIndex; // лучший путь
 
 
@@ -103,7 +102,6 @@ function restartAnts()
         if( ants[ ant ].tourLength < best )
         {
             best = ants[ant].tourLength;
-            phero1 = phero;
             bestIndex = ant; // сохраняем лучший путь
         }
         

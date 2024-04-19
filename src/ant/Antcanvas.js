@@ -197,7 +197,7 @@ function draw()
 
 function drawLine(p1, p2, progress , from , to ) 
     {
-        const turquoiseShade = Math.floor( 255 - phero1[from][to] * 80);
+        const turquoiseShade = Math.floor( 255 - phero[from][to] * 80);
         ctx.strokeStyle = `rgb(0, ${turquoiseShade}, 255)`;
         ctx.beginPath();
         ctx.fillRect(p2.x - 3, p2.y - 3, 10, 10);
