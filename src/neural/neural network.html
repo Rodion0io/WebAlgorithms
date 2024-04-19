@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/src/css/style.css">
-    <title>Нейроная сеть</title>
+    <title>Neural</title>
 </head>
 <body>
     <header class="hero">
@@ -34,7 +34,7 @@
                         <a href="/src/ant/ant.html" class="list-link" id="antt">Муравьиный алгоритм</a>
                     </li>
                     <li class="list">
-                        <a href="#" class="list-link" id="tr">Дерево решений</a>
+                        <a href="/src/tree/tree.html" class="list-link" id="tr">Дерево решений</a>
                     </li>
                     <li class="list">
                         <a href="#" class="list-link" id="neu">Нейроная сеть</a>
@@ -47,26 +47,6 @@
         <!-- /.container -->
     </header>
     <!-- /.hero -->
-    <!-- <div class="name-page">
-        <div class="container">
-            <div class="title">
-                <strong class="title-text">Neural</strong>
-            </div>
-
-                    <canvas></canvas>
-                    <strong class="title" id="demo" style="display: inline-block;"></strong>
-                    <script src="/src/neural/toRodion.js"></script>
-                        <div class="buttons">
-                            <button onclick="recognizeNumber(picture)">Узнать цифру</button>
-                            <button onclick="clearCanvas()">Сбросить поле</button>
-                            
-                        </div>
-                         
-                </div>
-
-        </div>
-
-    </div> -->
     <div class="name-page">
         <div class="container">
             <div class="title">
@@ -83,15 +63,16 @@
                 <div class="configure">
                     <button class="button button-style" onclick="recognizeNumber(picture)">Узнать цифру</button>
                     <button class="button button-style" onclick="clearCanvas()">Сброс</button>
+                    <strong class="answer" id="demo" style="display: inline-block;"></strong>
                 </div>
                 <!-- /.configure -->
                 <div class="field">
                     <canvas></canvas>
                 </div>
                 <!-- /.field -->
-                <strong class="title" id="demo" style="display: inline-block;"></strong>
             </div>
             <!-- /.interface-block -->
+            
         </div>
         <!-- /.container -->
     </section>

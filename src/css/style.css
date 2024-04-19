@@ -227,4 +227,9 @@ body {
     content: "\a";
     white-space: pre;
   }
+}
+@media (max-width: 992px) {
+  .configure {
+    align-items: center;
+  }
 }/*# sourceMappingURL=style.css.map */
