@@ -1,7 +1,7 @@
 const canvas = document.querySelector("canvas")
 const ctx = canvas.getContext("2d")
 const points = []; // массив для хранения поставленных точек
-let size = 550
+let size = 550;
 var flag1 = 1;
 var flag2 = 1;
 var flag3 = 1;
@@ -51,7 +51,7 @@ function clearCanvas()
 
 setCanvasSize(size)
 
-//setCanvasSize(size)
+
 
 canvas.addEventListener("click", function(event) 
 {
@@ -91,11 +91,11 @@ let clearLine = false;
 
 function emitDataFile()
 {
-    if (flag2 == 1 && flag3 == 1) 
+    if (flag2 === 1 && flag3 === 1) 
     {  
     flag1 = 0;
 
-   // console.log (currentPointIndex);
+
     let currentPoint = points[ antBest[currentPointIndex] ] , nextPoint;
 
     if (currentPointIndex + 1 < points.length) 
@@ -142,10 +142,10 @@ function emitDataFile()
 
 function draw()
 {
-    if (flag1 == 1 && flag4 == 1 ) 
+    if (flag1 === 1 && flag4 === 1 ) 
     {
         flag2 = 0;
-   // console.log (currentPointIndex);
+
    if (clearLine ) 
    {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -155,7 +155,7 @@ function draw()
     let currentPoint = points[  currentPointIndex1  ] 
     let nextPoint = points[ NextIndex ];
 
-  //  console.log(phero1);
+
 
     ctx.fillRect(currentPoint.x - 3, currentPoint.y - 3, 10, 10);
     ctx.fill;
@@ -197,7 +197,7 @@ function draw()
 
 function drawLine(p1, p2, progress , from , to ) 
     {
-        const turquoiseShade = Math.floor( 255 - phero[from][to] * 100);
+        const turquoiseShade = Math.floor( 255 - phero1[from][to] * 80);
         ctx.strokeStyle = `rgb(0, ${turquoiseShade}, 255)`;
         ctx.beginPath();
         ctx.fillRect(p2.x - 3, p2.y - 3, 10, 10);
@@ -207,7 +207,7 @@ function drawLine(p1, p2, progress , from , to )
         let y = p1.y + (p2.y - p1.y) * progress;
         ctx.lineTo(x, y);
         ctx.stroke();
-        //setCanvasSize(size)
+  
     }
 
 function drawLine1(p1, p2, progress ) 
@@ -220,5 +220,6 @@ function drawLine1(p1, p2, progress )
         let y = p1.y + (p2.y - p1.y) * progress;
         ctx.lineTo(x, y);
         ctx.stroke();
-        //setCanvasSize(size)
+
     }
+

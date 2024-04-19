@@ -1,24 +1,25 @@
 //import points from "/Users/vaceslav/Desktop/aunt/Antcanvas.js"
 
-const antBest = [];
-var phero; 
-var MAX_CITIES 
-var MAX_DIST 
-var MAX_TOUR 
-var MAX_ANTS 
-var ants
-var ALPHA 
-var BETA 
-var RHO  
-var QVAL  
-var MAX_TOURS 
-var MAX_TIME  
-var INIT_PHER 
-var E_ACO 
-var cities 
-var dist 
-var best 
-var bestIndex 
+const antBest = []; // итоговый путь 
+var phero; // матрица феромонов
+var MAX_CITIES;  // число городов
+var MAX_DIST; // максимальное расстояние
+var MAX_TOUR; // максимальный путь
+var MAX_ANTS; // число муравьев
+var ants; // муравьи
+var ALPHA; // кэф / важность следа
+var BETA; // кэф к формуле /  важность видимости
+var RHO;  //   Скорость испарения
+var QVAL;  //     константа в числителе формулы
+var MAX_TOURS; //      матрица феромонов
+var MAX_TIME;  // время
+var INIT_PHER; // феромон по умолчанию
+var E_ACO; // 
+var cities; // матрица городов
+var dist; // матрица расстояний
+var best; //
+var phero1;
+var bestIndex; // лучший путь
 
 
 function init( )
@@ -50,7 +51,7 @@ function init( )
     {
         for( to = 0; to < MAX_CITIES; to++)
         {
-            if(to!=from && dist[from][to]=== 0.0)
+            if(to !== from && dist[from][to] === 0.0)
             {
                 var xd = ( ( cities[from][0] - cities[to][0] ) ) * ( ( cities[from][0] - cities[to][0] ) );
                 
@@ -61,17 +62,17 @@ function init( )
                 
             }
         }
-    }
+    } // данные по умолчанию
 
     
     to = 0;
 
-    for( ant = 0; ant < MAX_ANTS; ant++)
+    for( ant = 0; ant < MAX_ANTS ; ant++)
     {
-        if (to == MAX_CITIES)
+        if (to === MAX_CITIES)
             to=0;
         
-        ants[ant].curCity = to++;
+        ants[ant].curCity = to++;                  // муравьи по городам
         
         for(from = 0; from < MAX_CITIES; from++)
         {
@@ -95,17 +96,18 @@ function init( )
 
 function restartAnts()
 {
-    var ant,i,to=0;
+    var ant, i, to=0;
     
     for ( ant = 0; ant < MAX_ANTS; ant++ )
     {
         if( ants[ ant ].tourLength < best )
         {
             best = ants[ant].tourLength;
-            bestIndex = ant;
+            phero1 = phero;
+            bestIndex = ant; // сохраняем лучший путь
         }
         
-        ants[ant].nextCity = -1;
+        ants[ant].nextCity = -1; 
         ants[ant].tourLength = 0.0;
         
         for( i=0; i < MAX_CITIES; i++)
@@ -114,8 +116,10 @@ function restartAnts()
             ants[ant].path[i] = -1;
         }
         
-        if(to == MAX_CITIES)
-            to=0;
+        if (to === MAX_CITIES) 
+        {
+            to = 0;
+        }
             
         ants[ant].curCity = to++;
         
@@ -130,20 +134,20 @@ function restartAnts()
 function antProduct(from , to)
 {
    
-    return(( Math.pow( phero[from][to], ALPHA) * Math.pow( (1.0/ dist[from][to]), BETA)));
+    return( ( Math.pow( phero[from][to], ALPHA)  *   Math.pow( (1.0 / dist[from][to] ), BETA) ) ); // Вероятность перехода из вершины from в вершину to  
 }
 
 
-function selectNextCity(ant )
+function selectNextCity( ant ) // поиск след города
 {
     var from, to;
     var denom = 0.0;
     
     from = ants[ant].curCity;
-    for(to=0; to < MAX_CITIES; to++)
+    for( to = 0 ; to < MAX_CITIES; to++)
     {
         
-        if(ants[ant].tabu[to] == 0)
+        if(ants[ant].tabu[to] === 0) // пути которые не посетили
         {
             denom += antProduct(from , to );
         }
@@ -155,16 +159,16 @@ function selectNextCity(ant )
         to++;
         if ( to >= MAX_CITIES )
             to=0;
-        if ( ants[ant].tabu[to] == 0 )
+        if ( ants[ant].tabu[to] === 0 )
         {
-            p = antProduct(from , to) / denom;
+            p = antProduct(from , to) / denom; // насколько привлекательный
             
 
             var x = ( (Math.random()  )  );
 
             if(x < p)
             {
-                break;
+                break; // попали
             }
 
         }
@@ -174,12 +178,12 @@ function selectNextCity(ant )
     return to;
 }
     
-function simulateAnts( )
+function simulateAnts( ) // моделирования колонии муравьев
 {
     var k;
     var moving = 0;
 
-    for(k=0 ; k < MAX_ANTS; k++)
+    for( k=0 ; k < MAX_ANTS; k++)
     {
 
         if ( ants[k].pathIndex < MAX_CITIES )
@@ -194,9 +198,9 @@ function simulateAnts( )
             ants[k].tourLength = ants[k].tourLength + 
             dist[ants[k].curCity][ants[k].nextCity];
             
-            if (ants[k].pathIndex == MAX_CITIES)
+            if (ants[k].pathIndex === MAX_CITIES)
             {
-                ants[k].tourLength += dist[ants[k].path[MAX_CITIES -1]][ants[k].path[0]];
+                ants[k].tourLength += dist[ants[k].path[MAX_CITIES -1]][ants[k].path[0]]; 
             }
             
             ants[k].curCity = ants[k].nextCity;
@@ -208,34 +212,32 @@ function simulateAnts( )
     return moving;
 }
 
-//Updating trails
 
-function updateTrails()
+
+function updateTrails() // добавляем феромоны
 {
-    var from,to,i,ant,flag = 0,k;
-    
-    //Pheromone Evaporation
+    var from, to, i, ant, flag = 0, k; 
+
+        
     for( from=0; from < MAX_CITIES; from++)
     {
     
         for( to=0 ; to < MAX_CITIES ; to++)
         {
-            if(from!=to)
+            if(from !== to)
             {
                 phero[from][to] *=( 1.0 - RHO );
                 
                 if(phero[from][to] < 0.0 )
                 {
-                    phero[from][to] = INIT_PHER;
+                    phero[from][to] = INIT_PHER; //Уровень феромона по формуле
                 }
             }
 
-            
         }
     }
-   // draw();
+    
 
-    //Add new pheromone to the trails
     
     for(ant=0; ant < MAX_ANTS; ant++)
     {
@@ -260,9 +262,9 @@ function updateTrails()
                     flag = 1;
             }
 
-            if(flag == 1)
+            if (flag === 1)
             {
-                phero[from][to] += (QVAL / ants[ant].tourLength) + (QVAL / best ) ; //Elitist updation
+                phero[from][to] += (QVAL / ants[ant].tourLength) + (QVAL / best ) ;  //Уровень феромона по формуле
                 phero[to][from] = phero[from][to];
             }
             else
@@ -272,93 +274,90 @@ function updateTrails()
             }
         }
     }
-    //draw();
+  
 
     for (from=0; from < MAX_CITIES; from++)
     {
         for( to=0; to < MAX_CITIES; to++)
         {
             phero[from][to] *= RHO;
-            //console.log(phero[from][to]);
         }
     }
 
-   // draw()
 
 }
 
 
  function Bob() 
 {
-antBest.length = 0;
- MAX_CITIES = points.length ;
- MAX_DIST = Math.sqrt(550 * 550 + 550 * 500);
- MAX_TOUR = (MAX_CITIES * MAX_DIST);
- MAX_ANTS =  50;
+    antBest.length = 0;
+     MAX_CITIES = points.length ;
+     MAX_DIST = Math.sqrt(550 * 550 + 550 * 500);
+     MAX_TOUR = (MAX_CITIES * MAX_DIST);
+     MAX_ANTS =  50;
 
- ALPHA = 1.0;
- BETA = 5.0; 
- RHO  = 0.5; 
- QVAL  = 100;
- MAX_TOURS = 20;
- MAX_TIME  = (MAX_TOURS * MAX_CITIES);
- INIT_PHER =  (1.0 / MAX_CITIES);
- E_ACO = 1.0;
-
-//console.log (MAX_CITIES , MAX_TOUR);
-
-var curCity, nextCity, pathIndex , tourLength;
+     ALPHA = 1.0;
+     BETA = 5.0; 
+     RHO  = 0.5; 
+     QVAL  = 100;
+     MAX_TOURS = 20;
+     MAX_TIME  = (MAX_TOURS * MAX_CITIES);
+     INIT_PHER =  (1.0 / MAX_CITIES);
+     E_ACO = 1.0;
 
 
-ants = new Array(MAX_ANTS);
+    var curCity, nextCity, pathIndex , tourLength;
 
-for (let i = 0; i < MAX_ANTS; i++) 
-{
-    ants[i] = 
+
+    ants = new Array(MAX_ANTS);
+
+    for (let i = 0; i < MAX_ANTS; i++) 
     {
-        curCity, nextCity, pathIndex,
-        tabu : new Array(MAX_CITIES),
-        path : new Array(MAX_CITIES),
-        tourLength : 0,
-    };
-
-}
-
- cities = new Array(MAX_CITIES);
- dist = new Array(MAX_CITIES);
- phero = new Array(MAX_CITIES);
-
-for (let i = 0; i < MAX_CITIES; i++) 
-{
-  cities[i] = new Array(2);
-  dist[i] = new Array(MAX_CITIES);
-  phero[i] = new Array(MAX_CITIES);
-  
-}
-
- best = MAX_TOUR;
- bestIndex = 0;
-
-    var curTime = 0;
-
-    init( );
-
-    while( curTime < MAX_TIME)
-
-    {
-        
-        curTime = curTime + 1;
- 
-        if ( simulateAnts() == 0)
+        ants[i] = 
         {
+            curCity, nextCity, pathIndex,
+            tabu : new Array(MAX_CITIES), // пройденные вершины
+            path : new Array(MAX_CITIES),
+            tourLength : 0, // путь муравья
+        };
 
+    }
 
-            updateTrails();
-            
-            //console.log(phero);
+     cities = new Array(MAX_CITIES);
+     dist = new Array(MAX_CITIES);
+     phero = new Array(MAX_CITIES);
+
+    for (let i = 0; i < MAX_CITIES; i++) 
+    {
+      cities[i] = new Array(2);
+      dist[i] = new Array(MAX_CITIES);
+      phero[i] = new Array(MAX_CITIES);
   
-            if (curTime != MAX_TIME)
-                restartAnts();
+    }
+
+     best = MAX_TOUR;
+     bestIndex = 0;
+
+        var curTime = 0;
+    
+        init( );
+
+        while( curTime < MAX_TIME)
+
+        {
+        
+            curTime = curTime + 1;
+ 
+            if ( simulateAnts() === 0 )
+            {
+
+                updateTrails();
+            
+  
+                if (curTime !== MAX_TIME) 
+                {
+                    restartAnts();
+                }
 
         }
     }
@@ -369,7 +368,3 @@ for (let i = 0; i < MAX_CITIES; i++)
     }
     
 }
-
-
-
-    
