@@ -11,10 +11,15 @@ document.getElementById('generateButton').addEventListener('click', function() {
     if (flag == 0){
         const height = parseInt(document.getElementById('inputSize').value);
         const width = parseInt(document.getElementById('inputSize').value);
-        matrix = createMaze(width, height);
-        const field = document.querySelector('.field');
-        field.innerHTML = '';
-        visualizationMaze(matrix, height, width, heightField, widthField);
+        if (height < 5 && width < 5){
+            alert("Размер должен быть больше 5");
+        }
+        else{
+            matrix = createMaze(width, height);
+            const field = document.querySelector('.field');
+            field.innerHTML = '';
+            visualizationMaze(matrix, height, width, heightField, widthField);
+        }
     }
     if (flag){
         alert('Дождитесь завершения алгоритма!');
