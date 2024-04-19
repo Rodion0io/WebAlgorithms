@@ -106,6 +106,22 @@ body {
     margin-right: 17px;
   }
 }
+@media (max-width: 768px) {
+  .container {
+    max-width: 760px;
+  }
+  .logo {
+    margin-right: 17px;
+  }
+}
+@media (max-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+  .logo {
+    margin-right: 17px;
+  }
+}
 .interface-block {
   display: flex;
   justify-content: space-around;
@@ -172,6 +188,28 @@ body {
     text-align: center;
   }
 }
+@media (max-width: 768px) {
+  .interface-block {
+    flex-direction: column-reverse;
+  }
+  .field {
+    margin: auto;
+  }
+  .btn {
+    text-align: center;
+  }
+}
+@media (max-width: 576px) {
+  .interface-block {
+    flex-direction: column-reverse;
+  }
+  .field {
+    margin: auto;
+  }
+  .btn {
+    text-align: center;
+  }
+}
 @media (max-width: 992px) {
   .menu {
     display: block;
@@ -218,13 +256,57 @@ body {
     margin-right: 7px;
   }
 }
+@media (max-width: 768px) {
+  .configure {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .button-style {
+    margin-right: 7px;
+  }
+}
+@media (max-width: 576px) {
+  .configure {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .button-style {
+    margin-right: 7px;
+  }
+}
 @media (max-width: 992px) {
   .long::after {
     content: "\a";
     white-space: pre;
   }
 }
+@media (max-width: 768px) {
+  .long::after {
+    content: "\a";
+    white-space: pre;
+  }
+}
+@media (max-width: 576px) {
+  .long::after {
+    content: "\a";
+    white-space: pre;
+  }
+}
 @media (max-width: 992px) {
+  .configure {
+    align-items: center;
+  }
+}
+@media (max-width: 768px) {
+  .configure {
+    align-items: center;
+  }
+}
+@media (max-width: 576px) {
   .configure {
     align-items: center;
   }
