@@ -1,9 +1,11 @@
 const canvas = document.querySelector("canvas")
 const ctx = canvas.getContext("2d")
 const points = []; // массив для хранения поставленных точек
-let size = 550
+let size = 500
 var flag1 = 1;
 var flag2 = 1;
+var flag3 = 1;
+var flag4 = 1; 
 ///тест для канваса 
 
 function setCanvasSize( size )   // устанавливаю размер канвас и делаю обводку
@@ -11,16 +13,18 @@ function setCanvasSize( size )   // устанавливаю размер кан
     //if (check.length != 0)
     canvas.width = size
     canvas.height = size
-    // ctx.strokeRect(0, 0, canvas.width, canvas.height)
+    ctx.strokeRect(0, 0, canvas.width, canvas.height)
 }
 
 function drawPoints() 
 {   
     if ( flag1 == 1 && flag2 == 1) 
     {
-        setCanvasSize( size) // очищаем поле 
+        flag3 = 1;
+        flag4 = 1;
+        setCanvasSize( size ) 
         for (let i = 0; i < points.length ; i++) 
-        { // устанавливаем точки из списка points
+        { 
             ctx.beginPath();
             ctx.fillRect(points[i].x - 3, points[i].y - 3, 10, 10);
             ctx.fill();
@@ -32,7 +36,10 @@ function drawPoints()
 
 function clearCanvas()
 {
-    if ( flag1 == 1 && flag2 == 1)  {
+    if ( flag1 == 1 && flag2 == 1) 
+     {
+        flag3 = 1;
+        flag4 = 1;
         canvas.width = canvas.width
         antBest.length = 0;
         points.length = 0;
@@ -48,12 +55,15 @@ setCanvasSize(size)
 
 canvas.addEventListener("click", function(event) 
 {
-    if (flag1 == 1 && flag2 == 1) {
+    if (flag1 == 1 && flag2 == 1) 
+    {
     const x = event.offsetX; // берем координаты поставленной точки
     const y = event.offsetY;
-
-    for (let i = 0; i < points.length; i++) {
-        
+    flag3 = 1;
+    flag4 = 1;
+    
+    for (let i = 0; i < points.length; i++) 
+    {
         if (Math.abs(points[i].x - x) < 10 && Math.abs(points[i].y - y) < 10) { // если точка поставлена на другую точку, то удаляем их
             points.splice(i, 1);
             drawPoints();
@@ -66,7 +76,8 @@ canvas.addEventListener("click", function(event)
         {x: x, y: y}
     ); // если точка поставлена на пустое место, добавляем
     drawPoints();
-    Bob(); }
+    Bob(); 
+}
 });
 //export default points;
 
@@ -80,9 +91,10 @@ let clearLine = false;
 
 function emitDataFile()
 {
-    if (flag2 == 1) 
-    {
+    if (flag2 == 1 && flag3 == 1) 
+    {  
     flag1 = 0;
+
    // console.log (currentPointIndex);
     let currentPoint = points[ antBest[currentPointIndex] ] , nextPoint;
 
@@ -114,8 +126,11 @@ function emitDataFile()
 
     else 
     {
-        Bob();
+
+        Bob()
         flag1 = 1;
+        flag4 = 1;
+        flag3 = 0;
         currentPointIndex = 0;
         currentPoint = points[ antBest[0] ] ;
         progress = 0;
@@ -127,7 +142,7 @@ function emitDataFile()
 
 function draw()
 {
-    if (flag1 == 1) 
+    if (flag1 == 1 && flag4 == 1 ) 
     {
         flag2 = 0;
    // console.log (currentPointIndex);
@@ -146,12 +161,12 @@ function draw()
     ctx.fill;
     drawLine(currentPoint, nextPoint, progress1 , currentPointIndex1 , NextIndex );
 
-    progress1 += 0.1;
+    progress1 += 0.11;
 
     if (progress1 >= 1 && (NextIndex + 1 >= points.length )  ) 
     {
         progress1 = 0;
-        currentPointIndex1 = (currentPointIndex1 + 1) ;
+        currentPointIndex1 = (currentPointIndex1 + 1 ) ;
         NextIndex = currentPointIndex1 + 1;
     }
     else if (progress1 >= 1 ) 
@@ -167,7 +182,9 @@ function draw()
 
     else 
     {
+        flag3 = 1;
         flag2 = 1;
+        flag4 = 0;
         NextIndex = 1;
         currentPointIndex1 = 0;
         progress1 = 0;
@@ -205,4 +222,3 @@ function drawLine1(p1, p2, progress )
         ctx.stroke();
         //setCanvasSize(size)
     }
-
