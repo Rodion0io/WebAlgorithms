@@ -7,6 +7,7 @@ import { astar } from "./AstarAlgorithm.js";
 import { animateSearchAndPath, flag } from "./animate.js";
 export let matrix;
 
+// Событие на создание лабиринта
 document.getElementById('generateButton').addEventListener('click', function() {
     if (flag == 0){
         const height = parseInt(document.getElementById('inputSize').value);
@@ -26,6 +27,7 @@ document.getElementById('generateButton').addEventListener('click', function() {
     }
 });
 
+// Событие на добавление начальной координаты
 document.getElementById('addStart').addEventListener('click', function() {
     if (flag == 0){
         chooseStartPoint(matrix);
@@ -35,6 +37,7 @@ document.getElementById('addStart').addEventListener('click', function() {
     }
 });
 
+// Событие на добавление конечной координаты
 document.getElementById('addEnd').addEventListener('click', function(){
     if (flag == 0){
         chooseEndPoint(matrix)
@@ -44,6 +47,7 @@ document.getElementById('addEnd').addEventListener('click', function(){
     }
 });
 
+// Событие на запуск алгоритма
 document.getElementById('startButton').addEventListener('click', function() {
     const start = findStart(matrix);
     const end = findEnd(matrix);

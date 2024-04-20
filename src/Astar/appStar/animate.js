@@ -1,6 +1,7 @@
 export let flag = 0;
 import { matrix } from "./App.js";
 
+// Функция которая, показывает все узлы, которые посетил алгоритм
 export function animateSearchAndPath(exploredNodes, path, matrix) {
     let index = 0;
     const intervalId = setInterval(function() {
@@ -19,6 +20,7 @@ export function animateSearchAndPath(exploredNodes, path, matrix) {
     }, 10);
 }
 
+// Функция, которая показывает окончательный путь
 function animatePath(path) {
     let index = 0;
     if (path.length === 0){

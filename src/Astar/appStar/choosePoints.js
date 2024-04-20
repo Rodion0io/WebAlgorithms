@@ -1,5 +1,6 @@
 import { checkSuccsessStartPoint, checkSuccsessEndPoint, checkFaildStartPoint, checkFaildEndPoint, deleteBadItems } from "./checkers.js";
 
+// Выбор стартовой координаты
 export function chooseStartPoint(matrix) {
     const field = document.querySelector('.field');
     const height = matrix.length;
@@ -32,6 +33,8 @@ export function chooseStartPoint(matrix) {
     }
 }
 
+
+// Выбор конечной координаты
 export function chooseEndPoint(matrix) {
     const field = document.querySelector('.field');
     const height = matrix.length;

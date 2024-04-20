@@ -1,3 +1,4 @@
+// Проверка на наличие стартовой координаты
 export function findStart(matrix) {
     const height = matrix.length;
     const width = matrix[0].length;
@@ -11,6 +12,7 @@ export function findStart(matrix) {
     return null;
 }
 
+// Проверка на наличие конечной координаты
 export function findEnd(matrix) {
     const height = matrix.length;
     const width = matrix[0].length;

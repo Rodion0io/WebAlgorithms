@@ -1,5 +1,6 @@
 import { flag } from "./animate.js";
 
+// Функция, которая накидывает дизайн на лабиринт
 export function visualizationMaze(matrix, height, width, heightField, widthField) {
     const heightItem = heightField / height;
     const widthItem = widthField / width;

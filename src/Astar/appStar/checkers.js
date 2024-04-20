@@ -50,6 +50,7 @@ export function checkFaildEndPoint(matrix, height, width) {
     }
 }
 
+// Очистка
 export function deleteBadItems(matrix){
     const length = matrix.length;
     const width = matrix[0].length; 
