@@ -222,4 +222,3 @@ function drawLine1(p1, p2, progress )
         ctx.stroke();
 
     }
-

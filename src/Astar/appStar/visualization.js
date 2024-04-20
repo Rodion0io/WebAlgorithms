@@ -1,6 +1,4 @@
-import { heightField, widthField} from "./constantVariable.js";
 import { flag } from "./animate.js";
-import { deleteBadItems } from "./checkers.js";
 
 export function visualizationMaze(matrix, height, width, heightField, widthField) {
     const heightItem = heightField / height;
@@ -31,7 +29,6 @@ export function visualizationMaze(matrix, height, width, heightField, widthField
     field.addEventListener('click', function(event) {
         const clickedBlock = event.target;
         if (clickedBlock.classList.contains('block__item') && flag == 0){
-            // deleteBadItems(matrix);
             const clickedBlockId = clickedBlock.id.split('-');
             const row = parseInt(clickedBlockId[0]);
             const col = parseInt(clickedBlockId[1]);

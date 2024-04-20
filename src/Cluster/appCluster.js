@@ -2,8 +2,24 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const points = []; // массив для хранения поставленных точек
 const points1 =[];
-let height = 550;
-let width = 550;
+let width;
+let height;
+function updateDimensions() {
+    if (window.innerWidth < 576){
+        height = 410;
+        width = 410;
+    } else {
+        height = 552;
+        width = 552;
+    }
+}
+
+
+updateDimensions();
+
+window.addEventListener('resize', () => {
+    updateDimensions();
+});
 let colours = [ "Red" , "Blue" , "Green" , "Yellow" , "Pink" , "Purple" , "Orange" , "Brown" , "Navy" , "Teal" , "Lavender" , "Maroon" , "Aqua" , "Silver" , "Gold" , "Indigo" , "Turquoise" , "Magenta" , "Peach" , "Mint" , "Coral" , "Beige" , "Charcoal" , "Ruby" , "Slate" , "Ivory" , "Lilac" , "Cyan" , "Orchid" , "Olive" , "Salmon" , "Tan" , "Sky" , "blue" , "Periwinkle" , "Burgundy" , "Mauve" , "Taupe" , "Steel" , "blue" , "Mustard" , "Plum" , "Crimson" , "Khaki" , "Sand" , "Jade" , "Emerald" , "Rust" , "Saffron" , "Sepia" , "Garnet" , "Tangerine" , "Turquoise" , "Umber" , "Vermilion" , "Violet" , "Lilac" , "Apricot" , "Cerulean" , "Hazelnut" , "Cobalt" , "Champagne" , "Copper" , "Topaz" , "Ebony" , "Flax" , "Granite" , "Ivory" , "Lapis" , "Mink" , "Moss" , "Pearl" , "Sable" , "Sapphire" , "Sienna" , "Silver" , "Smoke" , "Sunflower" , "Rose" , "Lavender" , "Vermilion" , "Cornflower" , "Amethyst" , "Aquamarine" , "Azure" , "Lavender" , "Celadon" , "Chartreuse" , "Cinnamon" , "Cobalt" , "Coral" , "Cyan" , "Lemon" , "Flamingo" , "Marigold" , "Cinnamon" , "Mint" , "Raspberry" , "Lilac" , "Sandalwood" ];
 let ammountOfClusters = 0;
 

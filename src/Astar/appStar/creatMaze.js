@@ -1,5 +1,3 @@
-import { heightField, widthField } from "./constantVariable.js";
-
 export function createMaze(width, height){
     let maze = [];
     for (let h = 0; h < height; h++){

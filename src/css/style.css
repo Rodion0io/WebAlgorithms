@@ -204,6 +204,8 @@ body {
     flex-direction: column-reverse;
   }
   .field {
+    width: 410px;
+    height: 410px;
     margin: auto;
   }
   .btn {
@@ -273,6 +275,14 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
+  }
+  .field {
+    width: 410px;
+    height: 410px;
+  }
+  canvas {
+    width: 410px;
+    height: 410px;
   }
   .button-style {
     margin-right: 7px;

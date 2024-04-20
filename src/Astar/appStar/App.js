@@ -1,5 +1,5 @@
-import { heightField, widthField } from "./constantVariable.js";
 import { createMaze } from "./creatMaze.js";
+import { heightField, widthField } from "./constantVariable.js";
 import { visualizationMaze } from "./visualization.js";
 import { chooseStartPoint, chooseEndPoint } from "./choosePoints.js";
 import { findStart, findEnd } from "./operationWithPoints.js";

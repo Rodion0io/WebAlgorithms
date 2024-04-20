@@ -1,7 +1,25 @@
 const canvas = document.querySelector("canvas")
 const ctx = canvas.getContext("2d")
-var width = 550;
-var height = 550
+let width;
+let height;
+function updateDimensions() {
+    if (window.innerWidth < 576){
+        height = 410;
+        width = 410;
+    } 
+    else {
+        height = 552;
+        width = 552;
+    }
+}
+
+
+updateDimensions();
+
+window.addEventListener('resize', () => {
+    updateDimensions();
+});
+
 import {weightsOfFirstLayer, weightsOfSecondLayer, biasOfFirstLayer, biasOfSecondLayer} from './biasAndWeights.js';
 const picture = [];
 window.picture = picture
